@@ -1,0 +1,40 @@
+@tailwind base;
+
+/* @layer base {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    /* Reset styles for autofilled inputs */
+    /* -webkit-box-shadow: 0 0 0 30px white inset;
+    -webkit-text-fill-color: #000;
+    caret-color: #000;
+    background-color: black !important
+  }
+} */
+
+@tailwind components;
+
+@layer components {
+
+  .autofill-text:-webkit-autofill {
+    -webkit-text-fill-color: white;
+  }
+
+  .text-input {
+    @apply autofill-text; /* set text colour (white) */
+    @apply autofill:shadow-[inset_0_0_0px_1000px_#000]; /* set 'background' colour (black)*/
+    /* @apply autofill:text-2xl; set font size */
+  }
+}
+
+@tailwind utilities;
+
+.clig-liga-off{
+  font-feature-settings: 'clig' off, 'liga' off;;
+}
+
+.line {
+  width: 2px; /* Adjust the width as needed */
+  transform: translateX(-50%); /* Move the line to the left by 50% of its width */
+}

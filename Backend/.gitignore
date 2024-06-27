@@ -1,0 +1,8 @@
+.env
+node_modules
+testConnection.js
+testCrud.js
+models_for_later
+migrations_to_be_used_later
+seeders
+dumbData.js
