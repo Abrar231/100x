@@ -6,3 +6,5 @@ models_for_later
 migrations_to_be_used_later
 seeders
 dumbData.js
+demo-vercel.json
+.vercel

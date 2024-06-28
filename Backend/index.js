@@ -1,11 +1,11 @@
 const express = require('express');
-const db = require('../models/index.js');
+const db = require('./models/index.js');
 const app = express();
-const port = require('../config/config.js').serverPort;
+const port = require('./config/config.js').serverPort;
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const Routes = require('../routes/index.js');
+const Routes = require('./routes/index.js');
 
 
 app.use(express.json());
@@ -45,6 +45,8 @@ app.get('/healthcheck', async (req, res) => {
 //     // res.status(200).json({imagePath});
 // });
 
-app.listen(port, () => {
-    console.log('Server started');
-});
+// app.listen(port, () => {
+//     console.log('Server started');
+// });
+
+module.exports = app;
