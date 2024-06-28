@@ -31,10 +31,10 @@ app.use('/api', Routes);
 app.get('/healthcheck', async (req, res) => {
     try {
         await db.sequelize.authenticate();
-        await db.sequelize.close();
+        // await db.sequelize.close();
         res.status(200).send('I am healthy');
     } catch (error) {
-        await db.sequelize.close();
+        // await db.sequelize.close();
         res.status(500).send('Internal Error Occurred');
     }
 });
