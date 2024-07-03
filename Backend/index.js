@@ -11,13 +11,15 @@ const Routes = require('./routes/index.js');
 app.use(express.json());
 app.use(cookieParser());
 
-const corsOptions = {
-    origin: 'http://localhost:5173', // The origin from which requests are allowed
-    credentials: true, // Allow sending cookies and other credentials
-    optionsSuccessStatus: 200, // For legacy browser support
-};
+// const corsOptions = {
+//     origin: 'http://localhost:5173', // The origin from which requests are allowed
+//     credentials: true, // Allow sending cookies and other credentials
+//     optionsSuccessStatus: 200, // For legacy browser support
+// };
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://100x-two.vercel.app/'
+}));
 
 // const allowedOrigins = ['http://localhost:5173'];
 // app.use(cors({
