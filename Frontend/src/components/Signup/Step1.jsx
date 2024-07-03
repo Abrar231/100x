@@ -2,16 +2,17 @@ import CloseDialogButton from '../CloseDialogButton'
 import Input from '../Input'
 import Button from '../Button'
 import PropTypes from 'prop-types'
-import { forwardRef, useRef, } from 'react'
+import { forwardRef, useRef, useState, } from 'react'
 import Step2 from './Step2'
 import { createPortal } from 'react-dom'
 import Select from '../Select'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup';
 
 // eslint-disable-next-line react/display-name
 const Step1 = forwardRef(({User, setUser}, ref) => {
     const step2Ref = useRef(null);
+    const [customErrors, setCustomErrors] = useState({});
 
     const months = [null, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
     const days = Array.from({ length: 32 }, (_, index) => index===0? null: index)
@@ -46,6 +47,8 @@ const Step1 = forwardRef(({User, setUser}, ref) => {
                         .required('Required'),
                     email: Yup.string()
                         .email('Invalid email address')
+                        .test('checkIsEmailAvailable', 'Email has already been taken.', () => !customErrors.email)
+                        // test return true for no error and false for error
                         .required('Required'),
                     day: Yup.number()
                         .required('Required'),
@@ -54,9 +57,11 @@ const Step1 = forwardRef(({User, setUser}, ref) => {
                     year: Yup.number()
                         .required('Required'),
                 })}
+                // validateOnBlur={false}
                 onSubmit={(values, { setSubmitting }) => {
                     // console.log('Handling onSubmit');
                     // console.log(`Values returned by formik: ${JSON.stringify(values)}`)
+                    // console.log(`Result: ${errors}`);
                     setUser({...User, ...values, 'date of birth': `${values.day} ${values.month} ${values.year}`});
                     // setIsStep2Open(true);
                     ref.current.close();
@@ -76,8 +81,8 @@ const Step1 = forwardRef(({User, setUser}, ref) => {
                                     Create your account
                                 </div>
                                 <div className="flex flex-col items-center gap-8 self-stretch">
-                                    <Input label="Name" name='name' type='text' />
-                                    <Input label="Email" name='email' type='text' />
+                                    <Field component={Input} label="Name" name='name' type='text' />
+                                    <Field component={Input} validateEmail setCustomErrors={setCustomErrors} label="Email" name='email' type='text' />
                                     <div className="flex flex-col items-start gap-2 self-stretch">
                                         <span className="text-neutral-50 text-[15px] font-bold">
                                         Date of birth
@@ -87,9 +92,9 @@ const Step1 = forwardRef(({User, setUser}, ref) => {
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3 self-stretch">
-                                        <Select size="lg" label="Month" options={months} name='month' />
-                                        <Select size="sm" label="Day" options={days} name='day' />
-                                        <Select size="sm" label="Year" options={years} name='year' />
+                                        <Field component={Select} size="lg" label="Month" options={months} name='month' />
+                                        <Field component={Select} size="sm" label="Day" options={days} name='day' />
+                                        <Field component={Select} size="sm" label="Year" options={years} name='year' />
                                     </div>
                                 </div>
                             </div>

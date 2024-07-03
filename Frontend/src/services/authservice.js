@@ -11,10 +11,13 @@ export const userLogin = async (email, password) => {
             body: JSON.stringify({email, password})
         });
         // console.log(response);
-        if(!response.ok){
-            throw new Error("Login Failed");
-        }
+        // if(!response.ok){
+        //     throw new Error("Login Failed");
+        // }
         const loginResponse = await response.json();
+        if(loginResponse.error){
+            return loginResponse;
+        }
         
         const User = avatarDataToUrl(loginResponse.User);
         return {...loginResponse, User};

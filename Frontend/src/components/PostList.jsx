@@ -90,27 +90,28 @@ const PostList = ({activeTab, posts, setPosts, User, setPopup}) => {
     }
 
     return (
-        <InfiniteScroll
-            dataLength={posts.length}
-            next={fetchMorePost}
-            hasMore={hasMore}
-            loader={<LoadingIcon />}
-            style={{overflow: 'visible'}}
-            endMessage={
-                <p style={{ textAlign: 'center' }}>
-                    <b>Yay! You have seen it all</b>
-                </p>
-            }
-        >
-            
-            <section className='w-full'>
-                {posts.map(post => 
-                    <button key={`${activeTab? feedType.current + '-': ''}${post.id}`} onClick={(e) => {handleClick(e,post.id)}} className='w-full' >
-                        <Post post={post} posts={posts} setPosts={setPosts} setPopup={setPopup} />
-                    </button>
-                )}
-            </section>
-        </InfiniteScroll>
+        <div className='w-full'>
+            <InfiniteScroll
+                dataLength={posts.length}
+                next={fetchMorePost}
+                hasMore={hasMore}
+                loader={<LoadingIcon />}
+                style={{overflow: 'visible'}}
+                endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            >
+                <section className='w-full'>
+                    {posts.map(post => 
+                        <div  key={`${activeTab? feedType.current + '-': ''}${post.id}`} onClick={(e) => {handleClick(e,post.id)}} className='w-full' role="button" tabIndex={0} >
+                            <Post post={post} posts={posts} setPosts={setPosts} setPopup={setPopup} />
+                        </div>
+                    )}
+                </section>
+            </InfiniteScroll>
+        </div>
   )
 }
 

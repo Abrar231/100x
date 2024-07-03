@@ -18,6 +18,8 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.21.2",
     "react-spinners": "^0.13.8",
+    "slate": "^0.103.0",
+    "slate-react": "^0.106.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {

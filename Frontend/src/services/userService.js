@@ -129,6 +129,9 @@ export const searchUser = async (query) => {
     try {
         const response = await fetch(`/api/profile/search?q=${query}`);
         const userList = await response.json();
+        if(!Array.isArray(userList)){
+            return userList;
+        }
         const users = userList.map(User => avatarDataToUrl(User));
         return users;
     } catch (error) {

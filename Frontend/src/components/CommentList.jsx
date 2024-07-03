@@ -13,7 +13,6 @@ function CommentList({comments, setComments, setCommentsCount, setPopup}) {
 CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   setComments: PropTypes.func.isRequired,
-  commentsCount: PropTypes.number.isRequired,
   setCommentsCount: PropTypes.func.isRequired,
   setPopup: PropTypes.func.isRequired,
 }

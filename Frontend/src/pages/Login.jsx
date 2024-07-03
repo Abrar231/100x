@@ -6,7 +6,6 @@ import { getIsAuthenticated } from '../services/authservice';
 import LoadingIcon from '../components/LoadingIcon';
 
 const Login = () => {
-    const [User, setUser] = useState({email:"", password: ""});
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -27,8 +26,8 @@ const Login = () => {
             </div>
         ) :
         (!isAuthenticated? 
-            <div className=' h-screen bg-black'>
-                {createPortal(<Login1 User={User} setUser={setUser} />, document.getElementById('root'))}
+            <div className=' h-screen bg-black flex justify-center items-center'>
+                {createPortal(<Login1 />, document.getElementById('root').firstElementChild)}
             </div>:
             <Navigate to="/home" replace />
         )

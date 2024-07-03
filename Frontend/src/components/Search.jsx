@@ -67,16 +67,26 @@ function Search() {
         {!searchResult && <div className='text-white flex justify-center mt-3 mb-10' >
           <span>Try searching for people</span>
         </div>}
-        {searchResult && <div className='w-full'>
-          {searchResult.map(user => <button key={user.id} className='flex m-2 w-full' onClick={() => {navigate(`/${user.username}`)}} >
-            {user.avatar && <img className='w-10 mr-3 ' src={user.avatar} />}
-            {!user.avatar && <div className='w-10 mr-3 aspect-square rounded-full bg-neutral-500' />}
-            <div className=' text-white'>
-              <div>{user.display_name}</div>
-              <div className='text-neutral-500'>@{user.username}</div>
-            </div>
-          </button>)}
-        </div>}
+        {searchResult && 
+          <>
+            {searchResult.message ?
+              <div className='text-white flex justify-center mt-3 mb-10' >
+                <span>{searchResult.message}</span>
+              </div>
+              : 
+              <div className='w-full'>
+                {searchResult.map(user => <button key={user.id} className='flex m-2 w-full' onClick={() => {navigate(`/${user.username}`)}} >
+                  {user.avatar && <img className='w-10 mr-3 ' src={user.avatar} />}
+                  {!user.avatar && <div className='w-10 mr-3 aspect-square rounded-full bg-neutral-500' />}
+                  <div className=' text-white'>
+                    <div>{user.display_name}</div>
+                    <div className='text-neutral-500'>@{user.username}</div>
+                  </div>
+                </button>)}
+              </div>
+            }
+          </> 
+        }
       </div>}
     </form>
   )

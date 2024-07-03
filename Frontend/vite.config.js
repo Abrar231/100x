@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import {apiUrl} from './config'
-
+console.log(`API_URL: ${apiUrl}`);
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],

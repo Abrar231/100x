@@ -40,6 +40,9 @@ const findUserByUsername = async (username) => {
         attributes: { exclude: ['email', 'password', 'date_of_birth', 'createdAt', 'updatedAt'] },
         raw: true
     });
+    if(!user){
+        return null;
+    }
     return await avatarUrlToData(user);
 }
 

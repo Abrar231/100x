@@ -1,16 +1,23 @@
 import PropTypes from 'prop-types'
 import greenTick from '../assets/images/create-account-2-signup-mdi-tick-circle.svg'
 import singupEye2 from '../assets/images/create-account-4-signup-eye.svg'
-import { useField, useFormikContext } from 'formik'
+// import { useField, useFormikContext } from 'formik'
 import { useEffect, useState } from 'react'
 import { isEmailAvailable } from '../services/userService'
 
 // const Input = ({label, type, User, setUser, ...rest }) => {
-const Input = ({label, type, ...props }) => {
+const Input = ({field, form, ...props}) => {
+    const {name, value} = field;
+    const {label, type, validateEmail, setCustomErrors } = props;
+    const {touched, errors, setFieldError} = form;
+    // console.log(`Field: ${JSON.stringify(field)}`);
+    // console.log(`Prop: ${JSON.stringify(props)}`);
+    // console.log(`Form: ${JSON.stringify(form)}`);
     // style={{color: 'rgb(239, 243, 244)'}}
     const [showPassword, setShowPassword] = useState(false);
     const handleClick = (e) => {
         e.stopPropagation();
+        e.preventDefault();
         setShowPassword(!showPassword)
     }
     const typeObj = {
@@ -22,8 +29,11 @@ const Input = ({label, type, ...props }) => {
             </button>
     }
 
-    const { setFieldError } = useFormikContext();
-    const [field, meta] = useField(props);
+    // const { setFieldError } = useFormikContext();
+    // const [field, meta, helpers] = useField(props);
+        // meta - {touched, error}
+        // flied = {name, value, onBlur}
+        // setFieldError
 
     // const handleOnChange = (e) => {
     //     setUser({ ...User, [label.toLowerCase()]: e.target.value})
@@ -33,35 +43,109 @@ const Input = ({label, type, ...props }) => {
     // console.log(`Field for Input ${label}: ${JSON.stringify(field)}`);
 
     useEffect(() => {
-        if(field.name === 'email' && field.value && (!meta.error || meta.error === 'Email has already been taken.')){
+        // console.log(`Field Value : ${value}, `);
+        // console.log(`validateEmail: ${validateEmail}`);
+        // console.log(`Field Name: ${name}`);
+        // console.log(`!errors[name]: ${!errors[name]}`);
+        // console.log(`errors[name]: ${errors[name]}`);
+        if(validateEmail && name === 'email' && value && (!errors[name] || errors[name] === 'Required' || errors[name] === 'Email has already been taken.')){
           const getData = setTimeout(async () => {
-            const response = await isEmailAvailable(field.value);
+            const response = await isEmailAvailable(value);
             if(!response.valid){
                 // validation error
                 // Check how to add custom error while using async operation
+                console.log('Setting Error');
+                // setError('Email has already been taken.');
                 setFieldError('email', 'Email has already been taken.');
+                setCustomErrors(err => {return {...err, email: 'Email has already been taken.'}});
             } else {
-                setFieldError('email', '');
+                if(errors[name] === 'Email has already been taken.'){
+                    console.log('Unsetting Error');
+                    // setError(undefined);
+                    setFieldError('email', undefined);
+                    setCustomErrors(err => {return {...err, email: undefined}});
+                }
             }
           }, 1000);
       
           return () => clearTimeout(getData)
         }
-    }, [field.value ]);
+    }, [value]);
+
+    // const handleFocus = async () => {
+    //     console.log(`touched.name: ${touched[name]}, Name: ${name}`);
+    //     if(!touched[name]){
+    //         setTouched({...touched, name: true});
+    //     }
+    //     if(validateEmail && name === 'email' && value && (!errors[name] || errors[name] === 'Required' || errors[name] === 'Email has already been taken.')){
+    //         const response = await isEmailAvailable(value);
+    //         if(!response.valid){
+    //             // validation error
+    //             // Check how to add custom error while using async operation
+    //             console.log('Setting Error');
+    //             setFieldError('email', 'Email has already been taken.');
+    //             // setError('Email has already been taken.');
+    //         } else {
+    //             // setError(undefined);
+    //             if(errors[name] === 'Email has already been taken.'){
+    //                 console.log('Unsetting Error');
+    //                 setFieldError('email', undefined);
+    //             }
+    //         }
+    //     }
+    // }
+
+    // const handleBlur = (e) => {
+    //     onBlur(e);
+    //     if (errors[name] === 'Email has already been taken.') {
+    //       setError('Email has already been taken.');
+    //     }
+    // };
+
+    // const handleInput = () => {
+    //     console.log('Inside handleInput');
+        // console.log(`validateEmail: ${validateEmail}`);
+        // console.log(`Field Name: ${name}`);
+        // console.log(`Field Value: ${value}`);
+        // console.log(`!errors[name]: ${!errors[name]}`);
+        // console.log(`errors[name]: ${errors[name]}`);
+    //     if(validateEmail && name === 'email' && value && (!errors[name] || errors[name] === 'Email has already been taken.')){
+    //         const getData = setTimeout(async () => {
+    //           const response = await isEmailAvailable(value);
+    //           if(!response.valid){
+    //               // validation error
+    //               // Check how to add custom error while using async operation
+    //               console.log('Setting Error');
+    //               setFieldError('email', 'Email has already been taken.');
+    //           } else {
+    //               console.log('Unsetting Error');
+    //               setFieldError('email', undefined);
+    //           }
+    //         }, 1000);
+        
+    //         return () => clearTimeout(getData)
+    //     }
+    // }
 
     return (
         <div className="relative self-stretch">
             <input
-                type={type==="password"? (!showPassword? 'password': 'text'): "text"}
-                className={`text-input peer flex w-full py-4 px-3 items-center gap-2.5 rounded border font-inter border-neutral-500 text-neutral-50 text-lg placeholder:neutral-500 placeholder:text-lg bg-black focus:justify-between focus:border-twitter-blue focus:ring-0 focus:outline-none text-input ${meta.touched && meta.error && 'border-red-600 focus:border-red-600'}`}
-                placeholder={label} {...field} {...props} />
-            <label className={`text-neutral-500 font-inter peer-focus:text-twitter-blue text-xs font-medium p-1 m-4 absolute -top-7 bg-black ${meta.touched && meta.error && 'text-red-600 peer-focus:text-red-600'}`}>
+                type={type==="password"? (!showPassword? 'password': 'text'): "text"} {...field}
+                className={`text-input peer flex w-full py-4 px-3 items-center gap-2.5 rounded border font-inter border-neutral-500 text-neutral-50 text-lg placeholder:neutral-500 placeholder:text-lg bg-black focus:justify-between focus:border-twitter-blue focus:ring-0 focus:outline-none text-input ${touched[name] && errors[name] && 'border-red-600 focus:border-red-600'}`}
+                placeholder={label} 
+                // onFocus={handleFocus} 
+                // onBlur={handleBlur}
+                // onChange={() => console.log('Inside onChange')}
+                // onPaste={() => console.log('Inside onPaste')}
+                // onInput={handleInput} 
+                />
+            <label className={`text-neutral-500 font-inter peer-focus:text-twitter-blue text-xs font-medium p-1 m-4 absolute -top-7 bg-black ${touched[name] && errors[name] && 'text-red-600 peer-focus:text-red-600'}`}>
                 {label}
             </label>
             {/* {typeObj[type] && <img src={typeObj[type]} className="absolute top-4 right-3" alt="tick" />} */}
             {typeObj[type]}
-            {meta.touched && meta.error && (
-                <div className="error font-medium text-xs text-red-600">{meta.error}</div>
+            {touched[name] && errors[name] && (
+                <div className="error font-medium text-xs text-red-600">{errors[name]}</div>
             )}
         </div>
     )
@@ -79,8 +163,12 @@ const Input = ({label, type, ...props }) => {
 }
 
 Input.propTypes = {
+    field: PropTypes.object,
+    form: PropTypes.object,
+    setCustomErrors: PropTypes.func,
     label: PropTypes.string.isRequired,
     type: PropTypes.string,
+    validateEmail: PropTypes.bool,
     // User: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     // setUser: PropTypes.func,
 }

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { forwardRef, useRef } from 'react'
 // import Step3 from './Step3'
 import { createPortal } from 'react-dom'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import Step4 from './Step4'
 
@@ -60,13 +60,13 @@ const Step2 = forwardRef(({  User, setUser, }, ref) => {
                                 Create your account
                                 </div>
                                 <div className="flex flex-col items-center gap-8 self-stretch">
-                                    <Input label="Name" type="greenTick" name='name' />
-                                    <Input label="Email" type="greenTick" name='email' />
-                                    <Input label="Date of birth" type="greenTick" name='date of birth' />
+                                    <Field component={Input} label="Name" type="greenTick" name='name' />
+                                    <Field component={Input} label="Email" type="greenTick" name='email' />
+                                    <Field component={Input} label="Date of birth" type="greenTick" name='date of birth' />
                                 </div>
                             </div>
                             <div className="flex pt-16 md:pt-0 flex-col justify-end items-center gap-5 grow shrink-0 basis-0 self-stretch">
-                                <Button size="lg" variant="blue" textColor="white" type='submit' disable={!isValid}>
+                                <Button size="lg" variant="blue" textColor="white" type='submit' disabled={!isValid}>
                                     Sign up
                                 </Button>
                                 {createPortal(<Step4 ref={step3Ref} User={User} setUser={setUser} />, document.getElementById('root'))}

@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react'
 import { getIsAuthenticated } from '../services/authservice';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import LoadingIcon from './LoadingIcon';
 
 const PrivateRoute = ({component}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const location = useLocation();
 
     useEffect(() => {
         const getAuth = async () => {
-            console.log(`Location pathname: ${location.pathname}`);
             const response = await getIsAuthenticated();
             setIsAuthenticated(response.isAuthenticated);
             setIsLoading(false);
@@ -35,7 +33,7 @@ const PrivateRoute = ({component}) => {
 }
 
 PrivateRoute.propTypes = {
-    component: PropTypes.func,
+    component: PropTypes.object,
 }
 
 export default PrivateRoute;

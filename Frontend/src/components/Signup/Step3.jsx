@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { forwardRef, useRef, } from 'react'
 import Step4 from './Step4'
 import { createPortal } from 'react-dom'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 
 // eslint-disable-next-line react/display-name
@@ -56,14 +56,14 @@ const Step3 = forwardRef(({  User, setUser }, ref) => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-end gap-3 self-stretch">
-                                    <Input label="Verification code" name='verificationCode' type='text' />
+                                    <Field component={Input} label="Verification code" name='verificationCode' type='text' />
                                     <span className="text-twitter-blue text-sm">
                                         Didn’t receive a code?
                                     </span>
                                 </div>
                             </div>
                             <div className="flex pt-20 flex-col justify-end items-center gap-5 grow shrink-0 basis-0 self-stretch">
-                                <Button size="lg" variant="white" textColor="black" type='submit' disable={!isValid} >
+                                <Button size="lg" variant="white" textColor="black" type='submit' disabled={!isValid} >
                                     Next
                                 </Button>
                                 {createPortal(<Step4 ref={step4Ref} User={User} setUser={setUser} />, document.getElementById('root'))}

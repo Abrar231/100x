@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { forwardRef } from 'react'
 import { createUser } from '../../services/userService'
 import { useNavigate } from 'react-router-dom'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 
 // eslint-disable-next-line react/display-name
@@ -81,11 +81,11 @@ const Step4 = forwardRef(({  User, setUser }, ref) => {
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-end gap-3 self-stretch">
-                                        <Input label="Password" type="password" name='password' />
+                                        <Field component={Input} label="Password" type="password" name='password' />
                                     </div>
                                 </div>
                                 <div className="flex pt-20 flex-col justify-end items-center gap-5 grow shrink-0 basis-0 self-stretch">
-                                    <Button size="lg" variant="white" textColor="black" type='submit' disable={!isValid} >
+                                    <Button size="lg" variant="white" textColor="black" type='submit' disabled={!isValid} >
                                         Next
                                     </Button>
                                 </div>

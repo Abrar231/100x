@@ -9,7 +9,7 @@ import Button from '../Button'
 import { UserContext } from '../../context/UserContext'
 import PropTypes from 'prop-types'
 import { updateUser } from '../../services/userService'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 
 // eslint-disable-next-line react/display-name
@@ -247,7 +247,7 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                                         Edit profile
                                     </div>
                                 </div>
-                                <Button size="sm" variant="white" textColor="black" type='submit' disable={!isValid} >
+                                <Button size="sm" variant="white" textColor="black" type='submit' disabled={!isValid} >
                                     Save
                                 </Button>
                             </div>
@@ -281,10 +281,10 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                                 </div>
                             </div>
                             <div className="flex flex-col items-center gap-5 self-stretch">
-                                <Input label="Name" name='display_name' />
-                                <Textarea label="Bio" name='bio' />
-                                <Input label="Location" name='location' />
-                                <Input label="Website" name='link' />
+                                <Field component={Input} label="Name" name='display_name' />
+                                <Field component={Textarea} label="Bio" name='bio' />
+                                <Field component={Input} label="Location" name='location' />
+                                <Field component={Input} label="Website" name='link' />
                             </div>
                         </div>
                     </Form>
