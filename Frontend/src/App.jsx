@@ -26,7 +26,14 @@ function App() {
   useEffect(() => {
     const getAuth = async () => {
       const response = await getIsAuthenticated();
-      setIsAuthenticated(response.isAuthenticated);
+      console.log('After getIsAuthenticated call');
+      if(response.isAuthenticated){
+        console.log('Setting IsAuthenticated true');
+        setIsAuthenticated(true);
+      } else {
+        console.log('Setting IsAuthenticated false');
+        setIsAuthenticated(false);
+      }
       setIsLoading(false);
     }
     getAuth();

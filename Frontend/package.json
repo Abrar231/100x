@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
     "formik": "^2.4.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -27,6 +26,7 @@
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
+    "dotenv": "^16.4.5",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",

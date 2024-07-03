@@ -1,3 +1,4 @@
+import { apiUrl } from "../../config";
 import { avatarDataToUrl } from "./util";
 
 const convertAvatarToUrl = (posts) => {
@@ -22,7 +23,7 @@ const convertAvatarToUrl = (posts) => {
 
 export const getForYouFeed = async (page) => {
     // console.log('Request sent to For You Feed API');
-    const posts = await fetch(`/api/post/forYouFeed?page=${page}`);
+    const posts = await fetch(`${apiUrl}/api/post/forYouFeed?page=${page}`);
     const {posts: jsonPosts, feedType} = await posts.json();
     const userPosts = convertAvatarToUrl(jsonPosts);
     // jsonPosts.map(post => {
@@ -39,7 +40,7 @@ export const getForYouFeed = async (page) => {
 
 export const getFollowingFeed = async (page) => {
     // console.log('Request sent to Following Feed API');
-    const posts = await fetch(`/api/post/followingFeed?page=${page}`);
+    const posts = await fetch(`${apiUrl}/api/post/followingFeed?page=${page}`);
     const {posts: jsonPosts, feedType} = await posts.json();
     const userPosts = convertAvatarToUrl(jsonPosts);
     // jsonPosts.map(post => {
@@ -96,7 +97,7 @@ export const getTimeDifference = (date1, date2) => {
 
 export const createPost = async (content, id) => {
   try {
-    const post = await fetch('/api/post/createPost', {
+    const post = await fetch(`${apiUrl}/api/post/createPost`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +123,7 @@ export const createPost = async (content, id) => {
 }
 
 export const deletePost = async (id) => {
-  const deletedPost = await fetch('/api/post/deletePost', {
+  const deletedPost = await fetch(`${apiUrl}/api/post/deletePost`, {
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json"
@@ -133,7 +134,7 @@ export const deletePost = async (id) => {
 }
 
 export const deleteRepost = async (repost_id) => {
-  const deletedRepost = await fetch('/api/post/deleteRepost', {
+  const deletedRepost = await fetch(`${apiUrl}/api/post/deleteRepost`, {
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json"
@@ -145,7 +146,7 @@ export const deleteRepost = async (repost_id) => {
 
 export const createComment = async (content, post_id) => {
   try {
-    const comment = await fetch('/api/post/createComment', {
+    const comment = await fetch(`${apiUrl}/api/post/createComment`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -167,7 +168,7 @@ export const createComment = async (content, post_id) => {
 }
 
 export const deleteComment = async (id, post_id) => {
-  const deletedComment = await fetch('/api/post/deleteComment', {
+  const deletedComment = await fetch(`${apiUrl}/api/post/deleteComment`, {
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json"
@@ -180,7 +181,7 @@ export const deleteComment = async (id, post_id) => {
 export const createLike = async (post_id) => {
   try {
     // console.log('Inside like method in postService.js');
-    const like = await fetch('/api/post/like', {
+    const like = await fetch(`${apiUrl}/api/post/like`, {
       method: 'POST', 
       headers: {
         "Content-Type": "application/json", 
@@ -199,7 +200,7 @@ export const createLike = async (post_id) => {
 
 export const deleteLike = async (post_id) => {
   try {
-    const deletedLike = await fetch('/api/post/deleteLike', {
+    const deletedLike = await fetch(`${apiUrl}/api/post/deleteLike`, {
       method: 'DELETE',
       headers: {
         "Content-Type": "application/json"
@@ -216,7 +217,7 @@ export const deleteLike = async (post_id) => {
 }
 
 export const getUserPosts = async (user_id, page) => {
-  const posts = await fetch(`/api/post/userPosts?id=${user_id}&page=${page}`);
+  const posts = await fetch(`${apiUrl}/api/post/userPosts?id=${user_id}&page=${page}`);
   const jsonPosts = await posts.json();
   // console.log("jsonPosts: " + JSON.stringify(jsonPosts));
   const userPosts = convertAvatarToUrl(jsonPosts);
@@ -225,7 +226,7 @@ export const getUserPosts = async (user_id, page) => {
 }
 
 export const getPostById = async (id) => {
-  const jsonPost = await fetch(`/api/post/postById?id=${id}`);
+  const jsonPost = await fetch(`${apiUrl}/api/post/postById?id=${id}`);
   const post = await jsonPost.json();
 
   const User = avatarDataToUrl(post.repost_id? post.originalPost.User: post.User);
@@ -239,7 +240,7 @@ export const getPostById = async (id) => {
 }
 
 export const getCommentsForPost = async (post_id) => {
-  const jsonComments = await fetch(`/api/post/getComments?post_id=${post_id}`);
+  const jsonComments = await fetch(`${apiUrl}/api/post/getComments?post_id=${post_id}`);
   const comments = await jsonComments.json();
   return convertAvatarToUrl(comments);
   // return []

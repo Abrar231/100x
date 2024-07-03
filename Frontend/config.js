@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
+// console.log(`API URL: ${process.env.VITE_API_URL}`);
 
-// eslint-disable-next-line no-undef
-export const apiUrl = process.env.VITE_API_URL;
+export const apiUrl = import.meta.env.VITE_API_URL;
