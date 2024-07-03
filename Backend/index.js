@@ -18,7 +18,7 @@ app.use(cookieParser());
 // };
 
 app.use(cors({
-    origin: 'https://100x-two.vercel.app/'
+    origin: 'https://100x-two.vercel.app'
 }));
 
 // const allowedOrigins = ['http://localhost:5173'];
