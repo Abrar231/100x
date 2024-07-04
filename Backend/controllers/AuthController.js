@@ -36,6 +36,8 @@ const login = async (req, res) => {
         res.cookie('user_id', User.id, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'None',
         // // },{
         //     expires: new Date(Date.now() + 86400000), // 1 day
         //     httpOnly: true,
