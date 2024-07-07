@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./models/index.js');
 const app = express();
-const port = require('./config/config.js').serverPort;
+const config = require('./config/config.js');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
@@ -18,7 +18,8 @@ app.use(cookieParser());
 // };
 
 app.use(cors({
-    origin: 'https://100x-two.vercel.app'
+    origin: config.corsOrigin,
+    credentials: true
 }));
 
 // const allowedOrigins = ['http://localhost:5173'];

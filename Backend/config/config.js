@@ -8,4 +8,5 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.HOST,
     dialect: process.env.DIALECT,
+    corsOrigin: process.env.CORS_ORIGIN,
 }

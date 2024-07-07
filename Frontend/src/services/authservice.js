@@ -9,7 +9,8 @@ export const userLogin = async (email, password) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({email, password}),
+            credentials: 'include'
         });
         // console.log(response);
         // if(!response.ok){
