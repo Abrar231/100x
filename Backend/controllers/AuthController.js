@@ -34,6 +34,7 @@ const login = async (req, res) => {
             return res.status(401).json({error: User.error});
         }
         res.cookie('user_id', User.id, {
+            domain: '.vercel.app',
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             secure: true,
