@@ -1,9 +1,10 @@
+import { apiUrl } from "../../config";
 import { avatarDataToUrl } from "./util";
 
 export const userLogin = async (email, password) => {
     try {
         // console.log('Inside userLogin');
-        const response = await fetch(`/api/login`, {
+        const response = await fetch(`${apiUrl}/api/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -34,8 +35,9 @@ export const userLogin = async (email, password) => {
 
 export const userLogout = async () => {
     try {
-        const response = await fetch(`/api/logout`, {
+        const response = await fetch(`${apiUrl}/api/logout`, {
             method: 'POST',
+            credentials: 'include'
         });
         return response.json();
     } catch (error) {
@@ -45,7 +47,9 @@ export const userLogout = async () => {
 
 export const getIsAuthenticated = async () => {
     try {
-        const response = await fetch(`/api/auth`);
+        const response = await fetch(`${apiUrl}/api/auth`, {
+            credentials: 'include'
+        });
         // const response = await fetch(`${BASE_URL}/auth`);
         return response.json();
     } catch (error) {
