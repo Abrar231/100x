@@ -2,5 +2,11 @@
   "buildCommand": "vite build",  
   "outputDirectory": "dist",
   "installCommand": "npm install",
-  "devCommand": "vite" 
+  "devCommand": "vite",
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "@vite_destination"
+    }
+  ] 
 }
