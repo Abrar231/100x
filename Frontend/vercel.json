@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "@vite_destination"
+      "destination": "https://100x-seven.vercel.app/api/:match*"
     }
   ] 
 }
