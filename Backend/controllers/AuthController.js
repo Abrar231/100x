@@ -34,17 +34,10 @@ const login = async (req, res) => {
             return res.status(401).json({error: User.error});
         }
         res.cookie('user_id', User.id, {
-            // domain: '.vercel.app',
-            // path: '/',
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             secure: true,
             sameSite: 'None',
-        // // },{
-        //     expires: new Date(Date.now() + 86400000), // 1 day
-        //     httpOnly: true,
-        //     secure: true,
-        //     sameSite: 'strict'
         });
         res.status(200).json({message: 'Logged in succesffuly.', User});
     } catch (error) {
@@ -58,7 +51,11 @@ const auth = (req, res) => {
 }
 
 const logout = async (req, res) => {
-    res.clearCookie('user_id');
+    res.clearCookie('user_id', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+    });
     res.status(200).json({message: 'Logged out succesffuly.', success: true});
 }
 
