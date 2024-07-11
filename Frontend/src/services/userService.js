@@ -62,6 +62,9 @@ export const getProfile = async (username) => {
         // const profile = await fetch(`${BASE_URL}/profile/${username}?user_id=8`);
 
         const profile = await response.json();
+        if(profile.error){
+            return profile;
+        }
         return avatarDataToUrl(profile);
 
         // const {avatar, image, ...profileJson} = await profile.json();

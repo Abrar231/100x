@@ -35,10 +35,10 @@ const getProfileByUsername = async (req, res) => {
     const user_id = req.cookies.user_id;
     try {        
         const user = await findUserByUsername(username);
-        const isFollowed = await getIsFollowed(user, user_id);
         if(!user){
-            return res.status(404).send('User not found');
+            return res.status(404).json({error: 'User not found', username});
         }
+        const isFollowed = await getIsFollowed(user, user_id);
         res.status(200).json({...user, isFollowed});
     } catch (error) {
         res.status(500).send('Internal Error' + error);

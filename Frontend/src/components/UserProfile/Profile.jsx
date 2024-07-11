@@ -10,7 +10,7 @@ const Profile = ({posts, setPosts, User, setUser}) => {
     return (
         <section className="inline-flex flex-col items-start gap-3 max-w-2xl border-x border-x-neutral-500 xl:min-w-[670px]">
             <ProfileHeader User={User} setUser={setUser} setPopup={setPopup} />
-            <PostList User={User} posts={posts} setPosts={setPosts} setPopup={setPopup} />
+            {User.id && <PostList User={User} posts={posts} setPosts={setPosts} setPopup={setPopup} />}
             <div className="h-16 lg:hidden" />
             {popup.show && <PopupMessage text={popup.text} />}
         </section>
