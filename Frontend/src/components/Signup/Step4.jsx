@@ -51,7 +51,7 @@ const Step4 = forwardRef(({  User, setUser }, ref) => {
                     })}
                     onSubmit={async (values, { setSubmitting }) => {
                         try {            
-                            const user = await createUser(User);
+                            const user = await createUser({...User, ...values});
                             if(user.success){
                                 ref.current.close();
                                 navigate('/login');
