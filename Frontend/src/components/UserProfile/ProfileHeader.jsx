@@ -126,7 +126,7 @@ function ProfileHeader({User, setUser, setPopup}) {
                         <div className="relative flex self-stretch justify-between">
                             <div className="relative w-1/4 h-auto mb-3 min-w-[50px] -mt-[13%] text-white">
                                 {avatar && <img className="w-full aspect-square border-4 border-black rounded-full" src={avatar} alt='Profile Image' />}
-                                {!avatar && <div className='w-full aspect-square bg-black border border-neutral-500 rounded-full'></div>}
+                                {!avatar && <div className='w-full aspect-square bg-black border border-neutral-800 rounded-full'></div>}
                             </div>
                             {id && <div className="self-end mt-2">
                                 {loggedInUser.id === id && <>

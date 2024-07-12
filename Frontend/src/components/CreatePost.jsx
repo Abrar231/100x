@@ -98,15 +98,16 @@ const CreatePost = forwardRef(( {posts, setPosts, setPopup} , ref ) => {
                     </button>
                 </div>
                 <div className="flex items-start gap-3 w-full grow ">
-                    <img className="shrink-0 rounded-[200px]" src={avatar} alt="user avatar" />
+                    {avatar && <img className="shrink-0 rounded-[200px]" src={avatar} alt="user avatar" />}
+                    {!avatar && <div className="w-10 h-10 shrink-0 rounded-[200px] bg-neutral-800" />}
                     <div className="flex  grow self-stretch">
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        {postContent.length===0 &&  <span className="text-neutral-600 font-inter text-xl absolute pointer-events-none" id="placeholder">What's happening?!</span>}
+                        {postContent.length===0 &&  <span className="mt-2 text-neutral-600 font-inter text-xl absolute pointer-events-none" id="placeholder">What's happening?!</span>}
                         {/* <div ref={divRef} id="tweet-content" autoFocus contentEditable="true" className="text-neutral-50 font-inter text-xl focus:outline-none caret-twitter-blue grow" onInput={handleInput}>
                             {postContent}
                         </div> */}
                         <Slate editor={editor} initialValue={value} onChange={newValue => setValue(newValue)} >
-                            <Editable className='text-neutral-50 font-inter text-xl focus:outline-none caret-twitter-blue grow' />
+                            <Editable className='text-neutral-50 font-inter text-xl focus:outline-none caret-twitter-blue grow mt-2' />
                         </Slate>
                     </div>
                 </div>

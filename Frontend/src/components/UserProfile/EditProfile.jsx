@@ -276,7 +276,7 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                                             <img src={addPhoto} />
                                         </button>
                                         {avatar && <img className="w-full h-full border-4 border-black rounded-full" src={avatar} />}
-                                        {!avatar && <div className='w-full aspect-square border border-neutral-500 bg-black rounded-full' />}
+                                        {!avatar && <div className='w-full aspect-square border border-neutral-800 bg-black rounded-full' />}
                                     </div>
                                 </div>
                             </div>
