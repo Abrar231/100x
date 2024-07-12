@@ -47,7 +47,7 @@ function PostDetail({id}) {
                     </span>
                 </div>
             </div>
-            {post.id && <Post post={post} commentsCount={commentsCount} setPopup={setPopup} />}
+            {post.id && <Post post={post} setComments={setComments} commentsCount={commentsCount} setPopup={setPopup} />}
             {popup.show && <PopupMessage text={popup.text} />}
             <PostInput type='comment' post={post} posts={comments} setPosts={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
             <CommentList comments={comments} setComments={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />

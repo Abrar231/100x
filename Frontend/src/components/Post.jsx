@@ -19,7 +19,7 @@ import Modal from './Modal'
 import { UserContext } from '../context/UserContext'
 import { Link } from 'react-router-dom'
 
-const Post = ({ post, posts, setPosts, commentsCount, setPopup }) => {
+const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) => {
     // const navigate = useNavigate();
 
     // console.log("Post Item: " + JSON.stringify(post))
@@ -162,7 +162,7 @@ const Post = ({ post, posts, setPosts, commentsCount, setPopup }) => {
                             <img className="hidden group-hover:inline" src={coloredCommentIcon} />
                             <span className="text-neutral-500 text-sm group-hover:text-twitter-blue">{commentCount === 0? null: commentCount}</span>
                         </button>
-                        {createPortal(<CommentModal ref={commentRef} post={post} setCommentCount={setCommentCount} setPopup={setPopup} />, document.getElementById('root'))}
+                        {createPortal(<CommentModal ref={commentRef} setComments={setComments} post={post} setCommentCount={setCommentCount} setPopup={setPopup} />, document.getElementById('root'))}
                         <button onClick={handleRepost} className="flex justify-center items-center gap-1.2 group">
                             {!Repost.is_reposted && <img className="group-hover:hidden" src={repostIcon} />}
                             {!Repost.is_reposted && <img className="hidden group-hover:inline" src={coloredRepostIcon} />}
@@ -195,6 +195,7 @@ Post.propTypes = {
     post: PropTypes.object.isRequired,
     posts: PropTypes.array,
     setPosts: PropTypes.func,
+    setComments: PropTypes.func,
     commentsCount: PropTypes.number,
     setPopup: PropTypes.func,
 }

@@ -15,7 +15,7 @@ import { Slate, Editable, withReact } from 'slate-react';
 //   ]
 
 // eslint-disable-next-line react/display-name
-const CommentModal = forwardRef(({post, setCommentCount, setPopup}, ref) => {
+const CommentModal = forwardRef(({post, setComments, setCommentCount, setPopup}, ref) => {
     const { id, content, posted_at } = post;
     const { display_name, username, avatar } = post.originalPost? post.originalPost.User: post.User;
     const [comment, setComment] = useState("");
@@ -84,6 +84,9 @@ const CommentModal = forwardRef(({post, setCommentCount, setPopup}, ref) => {
         if(createdComment.comment.id){
             clearEditor();
             // console.log('Comment posted successfully. Comment_count:' + createdComment.comment_count);
+            if(setComments){
+                setComments(comments => {return {...comments, createdComment}});
+            }
             setCommentCount(createdComment.comment_count);
             ref.current.close();
             setPopup({show: true, text: 'Comment created successfully'});
@@ -151,6 +154,7 @@ const CommentModal = forwardRef(({post, setCommentCount, setPopup}, ref) => {
 
 CommentModal.propTypes = {
     post: PropTypes.object.isRequired,
+    setComments: PropTypes.func,
     setCommentCount: PropTypes.func.isRequired,
     setPopup: PropTypes.func.isRequired,
 }
