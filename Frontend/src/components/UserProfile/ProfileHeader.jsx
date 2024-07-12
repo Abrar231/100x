@@ -155,12 +155,12 @@ function ProfileHeader({User, setUser, setPopup}) {
                             {bio}
                         </div>
                         <div className="flex items-start gap-5">
-                            <div className="flex items-center gap-1">
+                            {link && <div className="flex items-center gap-1">
                                 <img src={linkIcon} />
                                 <span className="text-twitter-blue font-inter">
                                     {link}
                                 </span>
-                            </div>
+                            </div>}
                             <div className="flex items-center gap-1">
                                 <img src={calendarIcon} />
                                 <span className="text-neutral-500 font-inter">

@@ -7,6 +7,7 @@ import { getCommentsForPost, getPostById } from '../services/postService'
 import PropTypes from 'prop-types'
 import PopupMessage from './PopupMessage'
 import { useNavigate } from 'react-router-dom'
+import LoadingIcon from './LoadingIcon'
 
 function PostDetail({id}) {
     const [post, setPost] = useState({});
@@ -33,7 +34,7 @@ function PostDetail({id}) {
             setComments(fetchedComments);
         })();
     }, [id]);
-
+    // console.log(`Post: ${JSON.stringify(post)}`);
 
     return (
         <section className="inline-flex flex-col items-start  max-w-2xl border-x border-x-neutral-500 xl:min-w-[670px]">
@@ -47,10 +48,20 @@ function PostDetail({id}) {
                     </span>
                 </div>
             </div>
-            {post.id && <Post post={post} setComments={setComments} commentsCount={commentsCount} setPopup={setPopup} />}
-            {popup.show && <PopupMessage text={popup.text} />}
-            <PostInput type='comment' post={post} posts={comments} setPosts={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
-            <CommentList comments={comments} setComments={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
+            {post.id?
+                <div className='w-full'>
+                    {post.id && <Post post={post} setComments={setComments} commentsCount={commentsCount} setPopup={setPopup} />}
+                    {popup.show && <PopupMessage text={popup.text} />}
+                    <PostInput type='comment' post={post} posts={comments} setPosts={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
+                    {comments[0]?
+                        <CommentList comments={comments} setComments={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
+                        :
+                        <LoadingIcon />
+                    }
+                </div>
+                :
+                <LoadingIcon />
+            }
         </section>
     )
 }
