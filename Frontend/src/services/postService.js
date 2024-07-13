@@ -4,8 +4,8 @@ import { avatarDataToUrl } from "./util";
 const convertAvatarToUrl = (posts) => {
   return posts.map(post => {
     const {repost_id} = post;
-    const rawUser = repost_id? post.originalPost.User: post.User
-    const User = avatarDataToUrl(rawUser);
+    const User = repost_id? post.originalPost.User: post.User
+    // const User = avatarDataToUrl(rawUser);
 
     if(repost_id){
       return {...post, originalPost: {...post.originalPost, User}};
@@ -165,8 +165,8 @@ export const createComment = async (content, post_id) => {
       throw new Error('Error while creating Comment');
     }
     const createdComment = await comment.json();
-    const User = avatarDataToUrl(createdComment.comment.User);
-    return {...createdComment, comment: {...createdComment.comment, User}}
+    // const User = avatarDataToUrl(createdComment.comment.User);
+    return {...createdComment, comment: {...createdComment.comment, User: createdComment.comment.User}}
     // const {avatar} = createdComment.comment.User;
     // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
     // return {...createdComment, comment: {...createdComment.comment, User: {...createdComment.comment.User, avatar: avatarUrl}}};
@@ -240,7 +240,9 @@ export const getPostById = async (id) => {
   const jsonPost = await fetch(`${apiUrl}/api/post/postById?id=${id}`, {credentials: 'include'});
   const post = await jsonPost.json();
 
-  const User = avatarDataToUrl(post.repost_id? post.originalPost.User: post.User);
+  const User = post.repost_id? post.originalPost.User: post.User;
+  // const User = avatarDataToUrl(post.repost_id? post.originalPost.User: post.User);
+
   // const {avatar} = post.User;
   // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
   // console.log('Post returned by getPostById:' + JSON.stringify({...post, User:{...post.User, avatar: avatarUrl} }));

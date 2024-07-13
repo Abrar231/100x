@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom'
 import { followUser, unfollowUser } from '../../services/userService'
 import { useNavigate } from 'react-router-dom'
 import LoadingIcon from '../LoadingIcon'
+import { apiUrl } from '../../../config'
 
 function ProfileHeader({User, setUser, setPopup}) {
     const { loggedInUser } = useContext(UserContext);
@@ -119,13 +120,13 @@ function ProfileHeader({User, setUser, setPopup}) {
                                 </span>
                             </div>
                         </div>
-                        {image && <img className="w-full" src={image} />}
+                        {image && <img className="w-full" src={`${apiUrl}/${image}`} />}
                         {!image && <div className='w-full h-64 border border-black bg-searchbar-fill' /> }
                     </div>
                     <div className="flex self-stretch px-4 flex-col justify-end items-start gap-3">
                         <div className="relative flex self-stretch justify-between">
                             <div className="relative w-1/4 h-auto mb-3 min-w-[50px] -mt-[13%] text-white">
-                                {avatar && <img className="w-full aspect-square border-4 border-black rounded-full" src={avatar} alt='Profile Image' />}
+                                {avatar && <img className="w-full aspect-square border-4 border-black rounded-full" src={`${apiUrl}/${avatar}`} alt='Profile Image' />}
                                 {!avatar && <div className='w-full aspect-square bg-black border border-neutral-800 rounded-full'></div>}
                             </div>
                             {id && <div className="self-end mt-2">

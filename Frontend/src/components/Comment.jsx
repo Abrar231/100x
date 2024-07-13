@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import Modal from "./Modal";
 import threeDots from '../assets/images/dark-theme-ellipses-group.svg'
 import PropTypes from 'prop-types'
+import { apiUrl } from "../../config";
 
 function Comment({comment, comments, setComments, setCommentsCount, setPopup}) {
     const {loggedInUser} = useContext(UserContext);
@@ -29,7 +30,7 @@ function Comment({comment, comments, setComments, setCommentsCount, setPopup}) {
   return (
     <article className="flex w-full py-2 px-4 items-start gap-4 border-b border-neutral-500">
         <div className='w-12 h-12'>
-            {avatar && <img className="shrink-0" src={avatar} />}
+            {avatar && <img className="shrink-0" src={`${apiUrl}/${avatar}`} />}
             {!avatar && <div className='w-full h-full bg-neutral-800 rounded-full'/>}
         </div>
         <div className="flex flex-col items-start gap-2 grow shrink-0 basis-0">

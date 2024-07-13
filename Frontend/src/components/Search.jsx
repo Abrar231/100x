@@ -2,6 +2,7 @@ import searchIcon from '../assets/images/dark-theme-search-group.svg'
 import { useEffect, useRef, useState } from 'react';
 import { searchUser } from '../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../config';
 
 function Search() {
   const [query, setQuery] = useState('');
@@ -76,7 +77,7 @@ function Search() {
               : 
               <div className='w-full'>
                 {searchResult.map(user => <button key={user.id} className='flex m-2 w-full' onClick={() => {navigate(`/${user.username}`)}} >
-                  {user.avatar && <img className='w-10 mr-3 ' src={user.avatar} />}
+                  {user.avatar && <img className='w-10 mr-3 ' src={`${apiUrl}/${user.avatar}`} />}
                   {!user.avatar && <div className='w-10 mr-3 aspect-square rounded-full bg-neutral-500' />}
                   <div className=' text-white'>
                     <div>{user.display_name}</div>

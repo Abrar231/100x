@@ -11,26 +11,28 @@ const createUser = async (display_name, email, dob, password, username) => {
 
 const findAndUpdateUserProfile = async (user_id, data) => {
     const user = await db.User.findByPk(user_id);
-    const updatedUser = await user.update(data);
-    return await avatarUrlToData(data);
+    return await user.update(data);
+    // console.log(`Profile updated successfully`);
+    // return await avatarUrlToData(data);
 }
 
 const populateUserData = (req) => {
-    const avatar = req.files && req.files['avatar']? path.join(__dirname, req.files['avatar'][0].path): null;
-    const bgImage = req.files && req.files['bgImage']? path.join(__dirname, req.files['bgImage'][0].path): null;
-    const {display_name, bio, location, link} = req.body;
+    console.log(`Req.files['avatar'][0]: ${JSON.stringify(req.files)}`);
+    // console.log(`Req.files['bgImage'][0]: ${JSON.stringify(req.files['bgImage'][0])}`);
+    const avatar = req.files && req.files['avatar']? req.files['avatar'][0].filename: null;
+    const bgImage = req.files && req.files['bgImage']? req.files['bgImage'][0].filename: null;
     if(!!req.files['avatar'] && (!!req.files['bgImage'] || req.body.bgImage !== undefined)){
         console.log('Both');
-        return {display_name, bio, location, link, avatar, image: bgImage};
+        return {...req.body, avatar, image: bgImage};
     } else if(!!req.files['avatar']){
         console.log('avatar');
-        return {display_name, bio, location, link, avatar};
+        return {...req.body, avatar};
     } else if(!!req.files['bgImage'] || req.body.bgImage !== undefined){
         console.log('bgImage');
-        return {display_name, bio, location, link, image: bgImage};
+        return {...req.body, image: bgImage};
     } else {
         console.log('None');
-        return {display_name, bio, location, link};
+        return req.body;
     }
 }
 
@@ -43,7 +45,8 @@ const findUserByUsername = async (username) => {
     if(!user){
         return null;
     }
-    return await avatarUrlToData(user);
+    // return await avatarUrlToData(user);
+    return user;
 }
 
 const getIsFollowed = async (user, user_id) => {
@@ -61,7 +64,8 @@ const findUserById = async (id) => {
     if(!user){
         return false;
     }
-    return await avatarUrlToData(user);
+    // return await avatarUrlToData(user);
+    return user;
 }
 
 const followUserProfile = async (user_id, follower_id) => {
@@ -117,7 +121,8 @@ const getSearchedUser = async (query) => {
     return await Promise.all(
         userList.map(async User => {
             const rawUser = removeCircularReference(User);
-            return await avatarUrlToData(rawUser);
+            // return await avatarUrlToData(rawUser);
+            return rawUser;
     }));
 }
 

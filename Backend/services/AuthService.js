@@ -22,7 +22,8 @@ const userLogin = async (email, password) => {
         return {error: 'Invalid Credentials'};
     }
     const {id, display_name, username, avatar} = user;
-    return await avatarUrlToData({id, display_name, username, avatar});
+    return {id, display_name, username, avatar};
+    // return await avatarUrlToData({id, display_name, username, avatar});
 }
 
 module.exports = { getHash, getUserByEmail, userLogin }

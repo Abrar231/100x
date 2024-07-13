@@ -19,7 +19,7 @@ const authenticateUser = async (req, res, next) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/images/');
+        cb(null, 'public/images');
     },
     filename: (req, file, cb) => {
         const ext = path.extname(file.originalname);

@@ -42,6 +42,8 @@ app.get('/healthcheck', async (req, res) => {
     }
 });
 
+app.use(express.static('public/images'));
+
 // app.get('/images/avatar/:filename', authenticateUser, (req, res) => {
 //     const imagePath = path.join(__dirname, 'uploads/images', req.params.filename);
 //     res.sendFile(imagePath);

@@ -40,8 +40,8 @@ export const updateUser = async (formData) => {
         });
         const updatedUser = await response.json();
 
-        const User = avatarDataToUrl(updatedUser.User);
-        return {...updatedUser, User};
+        // const User = avatarDataToUrl(updatedUser.User);
+        return {...updatedUser, User: updatedUser.User};
 
         // const {avatar, image} = updatedUser.User;
         // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
@@ -65,7 +65,8 @@ export const getProfile = async (username) => {
         if(profile.error){
             return profile;
         }
-        return avatarDataToUrl(profile);
+        // return avatarDataToUrl(profile);
+        return profile;
 
         // const {avatar, image, ...profileJson} = await profile.json();
         // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
@@ -85,7 +86,8 @@ export const getProfileById = async () => {
         // }
 
         const profile = await response.json();
-        return avatarDataToUrl(profile);
+        // return avatarDataToUrl(profile);
+        return profile;
 
         // const {avatar, ...profileJson} = await profile.json();
         // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
@@ -140,8 +142,8 @@ export const searchUser = async (query) => {
         if(!Array.isArray(userList)){
             return userList;
         }
-        const users = userList.map(User => avatarDataToUrl(User));
-        return users;
+        // const users = userList.map(User => avatarDataToUrl(User));
+        return userList;
     } catch (error) {
         console.log(error);
     }

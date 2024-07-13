@@ -34,7 +34,6 @@ function PostDetail({id}) {
             setComments(fetchedComments);
         })();
     }, [id]);
-    // console.log(`Post: ${JSON.stringify(post)}`);
 
     return (
         <section className="inline-flex flex-col items-start  max-w-2xl border-x border-x-neutral-500 xl:min-w-[670px]">

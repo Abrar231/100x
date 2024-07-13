@@ -18,8 +18,8 @@ const markLiked_Repost = async (postList, user_id) => {
     return await Promise.all(postList.map(async rawPost => {
         const post = removeCircularReference(rawPost);
         const {originalPost} = post;
-        const {User: rawUser, id} = originalPost? originalPost: post;
-        const User = await avatarUrlToData(rawUser);
+        const {User, id} = originalPost? originalPost: post;
+        // const User = await avatarUrlToData(rawUser);
         const is_liked = await getIsLiked(id, user_id);
         const is_reposted = await getIsReposted(id, user_id);
         
@@ -99,8 +99,8 @@ const findCommentById = async (id) => {
         },
     });
     const comment = removeCircularReference(rawComment);
-    const User = await avatarUrlToData(comment.User);
-    return {...comment, User};
+    // const User = await avatarUrlToData(comment.User);
+    return {...comment, User: comment.User};
 }
 
 const incrementCommentCount = async (post_id) => {
@@ -136,8 +136,8 @@ const findAllCommentsByPostId = async (post_id) => {
     });
     return await Promise.all(commentList.map(async rawComment => {
         const comment = removeCircularReference(rawComment);
-        const User = await avatarUrlToData(comment.User);
-        return {...comment, User}
+        // const User = await avatarUrlToData(comment.User);
+        return {...comment, User: comment.User}
     }));
 }
 

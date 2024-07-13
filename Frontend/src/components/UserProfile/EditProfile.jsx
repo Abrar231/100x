@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import { updateUser } from '../../services/userService'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
+import { apiUrl } from '../../../config'
 
 // eslint-disable-next-line react/display-name
 const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => {
@@ -20,8 +21,8 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
     const avatarRef = useRef(null);
     const bgImageRef = useRef(null);
     // const {avatar, image} = User;
-    const [avatar, setAvatar] = useState(User.avatar);
-    const [bgImage, setBgImage] = useState(User.image);
+    const [avatar, setAvatar] = useState(User.avatar? `${apiUrl}/${User.avatar}`: null);
+    const [bgImage, setBgImage] = useState(User.image? `${apiUrl}/${User.image}`: null);
     const [isAvatarChanged, setIsAvatarChanged] = useState(false);
     const [isBgImageChanged, setIsBgImageChanged] = useState(false);
     // const [avatarData, setAvatarData] = useState(null);
@@ -49,7 +50,7 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
         // setAvatarData(file);
         if (file) {
             const reader = new FileReader();
-            reader.onload = () => {
+            reader.onloadend = () => {
                 setAvatar(reader.result);
                 setFieldValue('avatar', file);
             };
@@ -93,7 +94,7 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
         setIsBgImageChanged(true);
         if (file) {
             const reader = new FileReader();
-            reader.onload = () => {
+            reader.onloadend = () => {
                 setBgImage(reader.result);
                 setFieldValue('bgImage', file);
             };
@@ -183,11 +184,11 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                         .max(50, 'Must be 50 characters or less')
                         .required('Required'),
                     bio: Yup.string()
-                        .max(160, 'Must be 160 characters or less'),
+                        .max(160, 'Must be 160 characters or less').notRequired(),
                     link: Yup.string()
-                        .max(100, 'Must be 100 characters or less'),
+                        .max(100, 'Must be 100 characters or less').notRequired(),
                     location: Yup.string()
-                        .max(30, 'Must be 30 characters or less'),
+                        .max(30, 'Must be 30 characters or less').notRequired(),
                 })}
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
@@ -197,12 +198,11 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                         // formData.append('profile', values);
                         for (const [key, value] of Object.entries(values)) {
                             // console.log(`Key: ${key}, isAvatarChanged: ${isAvatarChanged} & isBgImageChanged: ${isBgImageChanged}, value: ${value}}`);
-                            if((key === 'avatar' && !isAvatarChanged) || (key === 'bgImage' && !isBgImageChanged)){
+                            if((key === 'avatar' && !isAvatarChanged) || (key === 'bgImage' && !isBgImageChanged) || !value){
                                 continue;
                             }
                             formData.append(key, value);
                         }
-                        // console.log("Values: " + JSON.stringify(values));
                         
                         // API call to update Profile
                         const updatedUser = await updateUser(formData);

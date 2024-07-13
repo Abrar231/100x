@@ -132,7 +132,7 @@ const Input = ({field, form, ...props}) => {
             <input
                 type={type==="password"? (!showPassword? 'password': 'text'): "text"} {...field}
                 className={`text-input peer flex w-full py-4 px-3 items-center gap-2.5 rounded border font-inter border-neutral-500 text-neutral-50 text-lg placeholder:neutral-500 placeholder:text-lg bg-black focus:justify-between focus:border-twitter-blue focus:ring-0 focus:outline-none text-input ${touched[name] && errors[name] && 'border-red-600 focus:border-red-600'}`}
-                placeholder={label} 
+                placeholder={label} value={value || ''} 
                 // onFocus={handleFocus} 
                 // onBlur={handleBlur}
                 // onChange={() => console.log('Inside onChange')}

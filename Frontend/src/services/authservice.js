@@ -21,8 +21,8 @@ export const userLogin = async (email, password) => {
             return loginResponse;
         }
         
-        const User = avatarDataToUrl(loginResponse.User);
-        return {...loginResponse, User};
+        // const User = avatarDataToUrl(loginResponse.User);
+        return {...loginResponse, User: loginResponse.User};
 
         // const {avatar} = loginResponse.User;
         // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
