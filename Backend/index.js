@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const Routes = require('./routes/index.js');
+const { setImageHeaders } = require('./middlewares/index.js');
 
 
 app.use(express.json());
@@ -41,6 +42,8 @@ app.get('/healthcheck', async (req, res) => {
         res.status(500).send('Internal Error Occurred');
     }
 });
+
+app.use(setImageHeaders);
 
 app.use(express.static('public/images'));
 
