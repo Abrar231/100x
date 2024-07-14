@@ -36,22 +36,22 @@ const setImageHeaders = (req, res, next) => {
       res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
       
       // Set the correct content type based on file extension
-      const ext = req.path.split('.').pop().toLowerCase();
-      switch (ext) {
-        case 'jpg':
-        case 'jpeg':
-          res.type('image/jpeg');
-          break;
-        case 'png':
-          res.type('image/png');
-          break;
-        case 'gif':
-          res.type('image/gif');
-          break;
-        case 'svg':
-          res.type('image/svg+xml');
-          break;
-      }
+    //   const ext = req.path.split('.').pop().toLowerCase();
+    //   switch (ext) {
+    //     case 'jpg':
+    //     case 'jpeg':
+    //       res.type('image/jpeg');
+    //       break;
+    //     case 'png':
+    //       res.type('image/png');
+    //       break;
+    //     case 'gif':
+    //       res.type('image/gif');
+    //       break;
+    //     case 'svg':
+    //       res.type('image/svg+xml');
+    //       break;
+    //   }
     }
     next();
 };
