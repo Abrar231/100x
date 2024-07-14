@@ -32,8 +32,8 @@ const upload = multer({ storage });
 const setImageHeaders = (req, res, next) => {
     if (req.path.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
     //   res.setHeader('Access-Control-Allow-Origin', '*'); // Or specify your frontend domain
-    //   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    //   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
       
       // Set the correct content type based on file extension
       const ext = req.path.split('.').pop().toLowerCase();
