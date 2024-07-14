@@ -44,8 +44,9 @@ app.get('/healthcheck', async (req, res) => {
 });
 
 // app.use(setImageHeaders);
+// app.use(express.static('public/images'));
 
-app.use('/images', setImageHeaders, express.static('public/images'));
+app.use(setImageHeaders, express.static('public/images'));
 
 // app.get('/images/avatar/:filename', authenticateUser, (req, res) => {
 //     const imagePath = path.join(__dirname, 'uploads/images', req.params.filename);

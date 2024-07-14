@@ -30,12 +30,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const setImageHeaders = (req, res, next) => {
-    if (req.path.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-    //   res.setHeader('Access-Control-Allow-Origin', '*'); // Or specify your frontend domain
-      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    // res.send(`Hi from setImageHeaders middleware`);
+    // console.log(`Response: ${JSON.stringify(res)}`);
+    res.setHeader('Access-Control-Allow-Origin', 'localhost:5173'); // Or specify your frontend domain
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Content-Type', 'image/jpeg');
+    // if (req.path.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
       
-      // Set the correct content type based on file extension
+    //  Set the correct content type based on file extension
     //   const ext = req.path.split('.').pop().toLowerCase();
     //   switch (ext) {
     //     case 'jpg':
@@ -52,7 +55,7 @@ const setImageHeaders = (req, res, next) => {
     //       res.type('image/svg+xml');
     //       break;
     //   }
-    }
+    // }
     next();
 };
 
