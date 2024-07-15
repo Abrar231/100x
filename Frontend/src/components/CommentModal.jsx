@@ -108,7 +108,7 @@ const CommentModal = forwardRef(({post, setComments, setCommentCount, setPopup},
                 {/* Post has to be shown here to which this comment is linked to */}
                 <article className='flex items-start gap-3 w-full grow relative'>
                     <div className='self-stretch'>
-                        {avatar && <img className="shrink-0 rounded-[200px]" src={`${apiUrl}/${avatar}`} />}
+                        {avatar && <img className="shrink-0 rounded-[200px]" src={`${apiUrl}/images/${avatar}`} />}
                         {!avatar && <div className='w-12 h-12 rounded-full border bg-neutral-800'></div>}
                     </div>
                     <div className="absolute left-[5%] top-12 bottom-0 bg-neutral-500/50 line"></div>
@@ -127,7 +127,7 @@ const CommentModal = forwardRef(({post, setComments, setCommentCount, setPopup},
                 </article>
                 <div className="flex items-start gap-3 w-full grow ">
                     <div className='self-stretch'>
-                        {loggedAvatar && <img className="shrink-0 rounded-[200px]" src={`${apiUrl}/${loggedAvatar}`} />}
+                        {loggedAvatar && <img className="shrink-0 rounded-[200px]" src={`${apiUrl}/images/${loggedAvatar}`} />}
                         {!loggedAvatar && <div className='w-12 h-12 rounded-full border bg-neutral-500'></div>}
                     </div>
                     <div className="flex  grow self-stretch" >

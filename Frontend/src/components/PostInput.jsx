@@ -122,7 +122,7 @@ const PostInput = ({posts, setPosts, type, post, setCommentsCount, setPopup}) =>
     
     return (
         <div className="sm:flex hidden self-stretch p-4 justify-center items-center gap-3 border-b border-neutral-500">
-            {loggedInUser.avatar && <img className="w-12 h-12 shrink-0 rounded-full" src={`${apiUrl}/${loggedInUser.avatar}`} alt="user avatar" />}
+            {loggedInUser.avatar && <img className="w-12 h-12 shrink-0 rounded-full" src={`${apiUrl}/images/${loggedInUser.avatar}`} alt="user avatar" />}
             {!loggedInUser.avatar && <div className="w-12 h-12 shrink-0 rounded-full bg-neutral-800" />}
             <div className="w-full">
                 {/* <span className="text-neutral-500 font-inter text-xl absolute" id="placeholder">What's happening?!</span> */}

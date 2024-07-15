@@ -45,8 +45,8 @@ app.get('/healthcheck', async (req, res) => {
 
 // app.use(setImageHeaders);
 // app.use(express.static('public/images'));
+app.use('/images', express.static('public/images'));
 
-app.use(setImageHeaders, express.static('public/images'));
 
 // app.get('/images/avatar/:filename', authenticateUser, (req, res) => {
 //     const imagePath = path.join(__dirname, 'uploads/images', req.params.filename);
@@ -54,8 +54,8 @@ app.use(setImageHeaders, express.static('public/images'));
 //     // res.status(200).json({imagePath});
 // });
 
-// app.listen(port, () => {
-//     console.log('Server started');
+// app.listen(config.serverPort, () => {
+//     console.log('Server started on port:' + config.serverPort);
 // });
 
 module.exports = app;

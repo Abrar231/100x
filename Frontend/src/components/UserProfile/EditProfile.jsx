@@ -21,8 +21,8 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
     const avatarRef = useRef(null);
     const bgImageRef = useRef(null);
     // const {avatar, image} = User;
-    const [avatar, setAvatar] = useState(User.avatar? `${apiUrl}/${User.avatar}`: null);
-    const [bgImage, setBgImage] = useState(User.image? `${apiUrl}/${User.image}`: null);
+    const [avatar, setAvatar] = useState(User.avatar? `${apiUrl}/images/${User.avatar}`: null);
+    const [bgImage, setBgImage] = useState(User.image? `${apiUrl}/images/${User.image}`: null);
     const [isAvatarChanged, setIsAvatarChanged] = useState(false);
     const [isBgImageChanged, setIsBgImageChanged] = useState(false);
     // const [avatarData, setAvatarData] = useState(null);
