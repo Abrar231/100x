@@ -17,21 +17,14 @@ function PostDetail({id}) {
     const navigate = useNavigate();
     
     useEffect(() => {
-        // console.log('Called inside useEffect');
         (async () => {
-            // Fetch post using id
-            // console.log('Called before getPostById');
             const postById = await getPostById(id);
-            // console.log('Called after getPostById');
             if(postById.id){
                 setPost(postById);
                 setCommentsCount(postById.comment_count);
-                // console.log('Called after setCommentsCount');
             }
-    
-            // Fetch comments on this post
             const fetchedComments = await getCommentsForPost(id);
-            setComments(fetchedComments);
+            setComments(fetchedComments.length? fetchedComments: [{}]);
         })();
     }, [id]);
 
@@ -53,7 +46,7 @@ function PostDetail({id}) {
                     {popup.show && <PopupMessage text={popup.text} />}
                     <PostInput type='comment' post={post} posts={comments} setPosts={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
                     {comments[0]?
-                        <CommentList comments={comments} setComments={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
+                        comments[0].id && <CommentList comments={comments} setComments={setComments} setCommentsCount={setCommentsCount} setPopup={setPopup} />
                         :
                         <LoadingIcon />
                     }
@@ -67,8 +60,6 @@ function PostDetail({id}) {
 
 PostDetail.propTypes = {
     id: PropTypes.string.isRequired,
-    // post: PropTypes.object.isRequired,
-    // comments: PropTypes.array.isRequired,
 }
 
 export default PostDetail
