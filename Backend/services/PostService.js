@@ -1,5 +1,5 @@
 const db = require('../models/index.js');
-const { avatarUrlToData, removeCircularReference } = require('../utility.js');
+const { removeCircularReference } = require('../utility.js');
 const { Op } = require('sequelize');
 
 const size = 20; // Pagination size
@@ -19,7 +19,6 @@ const markLiked_Repost = async (postList, user_id) => {
         const post = removeCircularReference(rawPost);
         const {originalPost} = post;
         const {User, id} = originalPost? originalPost: post;
-        // const User = await avatarUrlToData(rawUser);
         const is_liked = await getIsLiked(id, user_id);
         const is_reposted = await getIsReposted(id, user_id);
         
@@ -91,16 +90,13 @@ const createComment = async (content, user_id, post_id) => {
 }
 
 const findCommentById = async (id) => {
-    const rawComment =  await db.Comment.findOne({
+    return await db.Comment.findOne({
         where: {id},
         include: {
             model: db.User,
             attributes: ['display_name', 'username', 'avatar']
         },
     });
-    const comment = removeCircularReference(rawComment);
-    // const User = await avatarUrlToData(comment.User);
-    return {...comment, User: comment.User};
 }
 
 const incrementCommentCount = async (post_id) => {
@@ -124,7 +120,7 @@ const decrementCommentCount = async (post_id) => {
 }
 
 const findAllCommentsByPostId = async (post_id) => {
-    const commentList = await db.Comment.findAll({
+    return await db.Comment.findAll({
         where: {post_id},
         include: {
             model: db.User,
@@ -134,11 +130,6 @@ const findAllCommentsByPostId = async (post_id) => {
             ['replied_at', 'DESC'], // Order by the 'createdAt' column in descending order
         ],
     });
-    return await Promise.all(commentList.map(async rawComment => {
-        const comment = removeCircularReference(rawComment);
-        // const User = await avatarUrlToData(comment.User);
-        return {...comment, User: comment.User}
-    }));
 }
 
 const createLike = async (post_id, user_id) => {

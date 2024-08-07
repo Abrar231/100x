@@ -6,56 +6,26 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const Routes = require('./routes/index.js');
-const { setImageHeaders } = require('./middlewares/index.js');
-
 
 app.use(express.json());
 app.use(cookieParser());
-
-// const corsOptions = {
-//     origin: 'http://localhost:5173', // The origin from which requests are allowed
-//     credentials: true, // Allow sending cookies and other credentials
-//     optionsSuccessStatus: 200, // For legacy browser support
-// };
 
 app.use(cors({
     origin: config.corsOrigin,
     credentials: true
 }));
 
-// const allowedOrigins = ['http://localhost:5173'];
-// app.use(cors({
-//   origin: allowedOrigins
-// }));
-
-
-
 app.use('/api', Routes);
 
 app.get('/healthcheck', async (req, res) => {
     try {
         await db.sequelize.authenticate();
-        // await db.sequelize.close();
         res.status(200).send('I am healthy');
     } catch (error) {
-        // await db.sequelize.close();
         res.status(500).send('Internal Error Occurred');
     }
 });
 
-// app.use(setImageHeaders);
-// app.use(express.static('public/images'));
-app.use('/images', express.static('public/images'));
-
-
-// app.get('/images/avatar/:filename', authenticateUser, (req, res) => {
-//     const imagePath = path.join(__dirname, 'uploads/images', req.params.filename);
-//     res.sendFile(imagePath);
-//     // res.status(200).json({imagePath});
-// });
-
-// app.listen(config.serverPort, () => {
-//     console.log('Server started on port:' + config.serverPort);
-// });
+// app.use('/images', express.static('public/images'));
 
 module.exports = app;

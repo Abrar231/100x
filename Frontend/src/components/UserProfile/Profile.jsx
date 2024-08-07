@@ -18,7 +18,6 @@ const Profile = ({posts, setPosts, User, setUser}) => {
 }
 
 Profile.propTypes = {
-    // username: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     setPosts: PropTypes.func.isRequired,
     User: PropTypes.object.isRequired,

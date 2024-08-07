@@ -1,6 +1,12 @@
 const db = require('../models/index.js');
 const path = require('path');
 const multer  = require('multer');
+const AWS = require('aws-sdk');
+const {accessKeyId, secretAccessKey, sessionToken, region, s3BucketName} = require('../config/config.js');
+
+AWS.config.update({accessKeyId, secretAccessKey, sessionToken, region});
+
+const s3 = new AWS.S3();
 
 const authenticateUser = async (req, res, next) => {
     const user_id = req.cookies.user_id;
@@ -8,55 +14,68 @@ const authenticateUser = async (req, res, next) => {
         return res.status(401).json({message: 'Unauthorized', isAuthenticated: false});
     }
     try {
-        console.log('Inside authenticateUser Part-1');
         req.current_user = await db.User.findOne({where: {id: user_id}});
-        console.log('Inside authenticateUser Part-2');
         next();
     } catch (error) {
         res.status(401).send('Invalid User' + error);
     }
 }
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/images');
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, file.fieldname + '-user_id-' + req.cookies.user_id + ext);
-    },
-});
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-const upload = multer({ storage });
+const uploadToS3 = async (req, res, next) => {
+    const files = req.files;
+    const uploadPromises = [];
+  
+    if (!files) return next();
+  
+    for (const fieldName in files) {
+      const file = files[fieldName][0];
+      const params = {
+        Bucket: s3BucketName,
+        Key: `images/user_id-${req.cookies.user_id}-${fieldName}-${Date.now()}${path.extname(file.originalname)}`,
+        Body: file.buffer,
+        ContentType: file.mimetype
+      };
+  
+      uploadPromises.push(
+        s3.upload(params).promise()
+          .then(data => ({ fieldName, location: data.Location }))
+      );
+    }
+  
+    try {
+      const results = await Promise.all(uploadPromises);
+      req.fileUrls = results.reduce((acc, result) => {
+        acc[result.fieldName] = result.location;
+        return acc;
+      }, {});
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
 
-const setImageHeaders = (req, res, next) => {
-    // res.send(`Hi from setImageHeaders middleware`);
-    // console.log(`Response: ${JSON.stringify(res)}`);
-    res.setHeader('Access-Control-Allow-Origin', 'localhost:5173'); // Or specify your frontend domain
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.setHeader('Content-Type', 'image/jpeg');
-    // if (req.path.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-      
-    //  Set the correct content type based on file extension
-    //   const ext = req.path.split('.').pop().toLowerCase();
-    //   switch (ext) {
-    //     case 'jpg':
-    //     case 'jpeg':
-    //       res.type('image/jpeg');
-    //       break;
-    //     case 'png':
-    //       res.type('image/png');
-    //       break;
-    //     case 'gif':
-    //       res.type('image/gif');
-    //       break;
-    //     case 'svg':
-    //       res.type('image/svg+xml');
-    //       break;
-    //   }
-    // }
-    next();
-};
+  async function cleanupUnusedUserFiles(userId, activeAvatarKey, activeBgImageKey) {
+    const params = {
+      Bucket: process.env.S3_BUCKET_NAME,
+      Prefix: `images/user_id-${userId}` // Adjust this to match your file naming convention
+    };
+  
+    try {
+      const listedObjects = await s3.listObjectsV2(params).promise();
+      const deletePromises = listedObjects.Contents.map(async (object) => {
+        if (object.Key !== activeAvatarKey && object.Key !== activeBgImageKey) {
+          await deleteFileFromS3(object.Key);
+        }
+      });
+  
+      await Promise.all(deletePromises);
+      console.log(`Cleanup completed for user ${userId}`);
+    } catch (error) {
+      console.error(`Error during cleanup for user ${userId}:`, error);
+    }
+  }
 
-module.exports = {authenticateUser, upload, setImageHeaders }
+module.exports = {authenticateUser, upload, uploadToS3, cleanupUnusedUserFiles}

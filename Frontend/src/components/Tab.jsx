@@ -19,8 +19,6 @@ TabItem.propTypes = {
 }
 
 const Tab = ({ type, activeTab, setActiveTab }) => {
-    // const [activeTab, setActiveTab] = useState("ForYou")
-
     const base = "self-stretch border-y border-neutral-500"
 
     const typeStyles = {
@@ -31,11 +29,9 @@ const Tab = ({ type, activeTab, setActiveTab }) => {
     return (
         <div className={`${typeStyles[type]} ${base}`}>
             <TabItem text='For you' isActive={activeTab === "ForYou"} onClick={() => {
-                // console.log('Clicked on ForYou Tab');
                 setActiveTab("ForYou");
             }} />
             <TabItem text='Following' isActive={activeTab === "Following"} onClick={() => {
-                // console.log('Clicked on ForYou Tab');
                 setActiveTab("Following");
             }} />
         </div>

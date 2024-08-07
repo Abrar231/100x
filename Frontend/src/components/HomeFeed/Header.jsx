@@ -1,6 +1,5 @@
 import login100 from '../../assets/images/login-100.svg'
 import loginX from '../../assets/images/login-x.svg'
-// import userAvatar from '../../assets/images/user-avatar.png'
 import Tab from '../Tab'
 
 const Header = () => {
@@ -14,7 +13,6 @@ const Header = () => {
                 </div>
                 <div></div>
             </div>
-            {/* FOr you/ Following */}
             <Tab type='mobile'/>
         </header>
     )

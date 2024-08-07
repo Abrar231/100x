@@ -1,14 +1,4 @@
-const { getHash, getUserByEmail, userLogin } = require('../services/AuthService.js');
-
-const changePassword = async (req, res) => {
-    try {
-        const {password} = req.body;
-        const hashedPassword = await getHash(password);
-        res.status(200).json({hashedPassword});
-    } catch (error) {
-        res.status(500).send('Internal error occurred');
-    }
-}
+const { getUserByEmail, userLogin } = require('../services/AuthService.js');
 
 const isEmailAvailable = async (req, res) => {
     try {
@@ -25,7 +15,6 @@ const isEmailAvailable = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        console.log('API /login hit');
         const { email, password } = req.body;
     
         const User = await userLogin(email, password);
@@ -46,7 +35,6 @@ const login = async (req, res) => {
 }
 
 const auth = (req, res) => {
-    console.log('Inside Auth');
     res.status(200).json({isAuthenticated: true});
 }
 
@@ -59,4 +47,4 @@ const logout = async (req, res) => {
     res.status(200).json({message: 'Logged out succesffuly.', success: true});
 }
 
-module.exports = {changePassword, isEmailAvailable, login, auth, logout}
+module.exports = {isEmailAvailable, login, auth, logout}

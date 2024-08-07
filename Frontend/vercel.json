@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://100x-seven.vercel.app/api/:match*"
+      "destination": "http://localhost:3000/api/:match*"
     },
     {"source": "/(.*)", "destination": "/"}
   ] 

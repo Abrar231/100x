@@ -3,8 +3,6 @@ import signupX from '../assets/images/create-account-1-signup-x.svg'
 
 const CloseDialogButton = ({element, User, setUser}) => {
     const handleClick = () => {
-        // console.log(User);
-        // console.log("Clicked cancel Button");
         setUser({...User, name: "", email: "", "date of birth": "", day: "", month: "", year: "", password: ""});
         element.current.close();
     }

@@ -41,12 +41,8 @@ function ProfileHeader({User, setUser, setPopup}) {
     const editProfileRef = useRef(null);
     const {id, display_name, username, avatar, image, bio, link, joined_at, follower_count, following_count, isFollowed} = User;
     const joinedDate = new Date(joined_at);
-    // const avatar = 'http://localhost:3000/uploads/images/avatar-user_id-8.png';
-    // const avatar = 'https://pbs.twimg.com/profile_images/1790315732104073216/-deo5Y1t_400x400.png';
-    // const [isFollowed, setIsFollowed] = useState(User.isFollowed);
 
     const handleFollow = async () => {
-        // console.log('Clicked on handleFollow');
         const response = await followUser(id);
         if(response.success){
             const newUser = {...User, isFollowed: true, follower_count: response.follower_count}
@@ -59,7 +55,6 @@ function ProfileHeader({User, setUser, setPopup}) {
     }
 
     const handleUnfollow = async () => {
-        // console.log('Clicked on handleUnfollow');
         const response = await unfollowUser(id);
         if(response.success){
             const newUser = {...User, isFollowed: false, follower_count: response.follower_count}
@@ -70,7 +65,6 @@ function ProfileHeader({User, setUser, setPopup}) {
             }, 3000);
         }
     }
-    // console.log(`Value of isFollowed: ${isFollowed} and of User.isFollowed: ${User.isFollowed}`);
 
     return (
         <>
@@ -88,7 +82,6 @@ function ProfileHeader({User, setUser, setPopup}) {
                                     </span>
                                 </div>
                             </div>
-                            {/* {image && <img className="w-full" src={image} />} */}
                             <div className='w-full h-64 border border-black bg-searchbar-fill' />
                         </div>
                         <div className="flex self-stretch px-4 flex-col justify-end items-start gap-3">
@@ -120,13 +113,13 @@ function ProfileHeader({User, setUser, setPopup}) {
                                 </span>
                             </div>
                         </div>
-                        {image && <img className="w-full" src={`${apiUrl}/images/${image}`} />}
+                        {image && <img className="w-full" src={image} />}
                         {!image && <div className='w-full h-64 border border-black bg-searchbar-fill' /> }
                     </div>
                     <div className="flex self-stretch px-4 flex-col justify-end items-start gap-3">
                         <div className="relative flex self-stretch justify-between">
                             <div className="relative w-1/4 h-auto mb-3 min-w-[50px] -mt-[13%] text-white">
-                                {avatar && <img className="w-full aspect-square border-4 border-black rounded-full" src={`${apiUrl}/images/${avatar}`} alt='Profile Image' />}
+                                {avatar && <img className="w-full aspect-square border-4 border-black rounded-full" src={avatar} alt='Profile Image' />}
                                 {!avatar && <div className='w-full aspect-square bg-black border border-neutral-800 rounded-full'></div>}
                             </div>
                             {id && <div className="self-end mt-2">
@@ -137,10 +130,8 @@ function ProfileHeader({User, setUser, setPopup}) {
                                     {createPortal(<EditProfile ref={editProfileRef} User={User} setUser={setUser} setPopup={setPopup} closeDialog={closeDialog} />, document.getElementById('root'))}
                                 </>}
                                 {loggedInUser.id !== id && <div>
-                                    {/* Write Code for */}
                                     {!isFollowed && <Button variant='outline' textColor='white' onClick={handleFollow} >Follow</Button>}
                                     {isFollowed && <Button variant='outline' textColor='white' onClick={handleUnfollow} >Following</Button>}
-                                    {/* Impelement Follow / Unfollow Button after follow/unfollow APIs */}
                                 </div>}
                             </div>}
                         </div>

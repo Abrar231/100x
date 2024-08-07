@@ -4,7 +4,6 @@ const createNewPost = async (req, res) => {
     try {
         const { repost_id, content } = req.body;
         const { user_id } = req.cookies;
-        
         const createdPost = await createPost(repost_id, content, user_id);
         if(!createdPost.id){
             res.status(500).send('Error while creating post');
@@ -14,11 +13,9 @@ const createNewPost = async (req, res) => {
         if(repost_id){
             await incrementRepostCount(repost_id);
         }
-        
         const post = await findPostById(createdPost.id, user_id);
         res.status(200).json(post);
     } catch (error) {
-        console.log(error);
         res.status(500).send("Internal Error Occurred" + error);
     }
 }
@@ -48,7 +45,6 @@ const destroyRepost = async (req, res) => {
 
         // decrement repost_count by 1
         const repost_count = await decrementRepostCount(repost_id);
-
         res.status(200).json({message: 'Repost deleted successfully', repost_count, success: true});
     } catch (error) {
         res.status(500).json({error: 'Internal Error Occurred' + error, success: false});
@@ -81,7 +77,6 @@ const createNewComment = async (req, res) => {
 
         // increment comment_count by 1
         const comment_count = await incrementCommentCount(post_id);
-        
         res.status(200).json({comment , comment_count});
     } catch (error) {
         res.status(500).send("Internal Error Occurred" + error);
@@ -92,7 +87,6 @@ const destroyComment = async (req, res) => {
     try {
         const user_id = req.cookies.user_id;
         const {id, post_id} = req.body;
-        
         const deletedComment = await deleteComment(id, user_id);
         if(!deletedComment){
             return res.status(404).json({message: 'Unable to delete comment', success: false});
@@ -100,7 +94,6 @@ const destroyComment = async (req, res) => {
 
         // decrement comment_count by 1
         const {comment_count} = await decrementCommentCount(post_id);
-
         res.status(200).json({message: 'Comment deleted successfully', comment_count, success: true});
     } catch (error) {
         res.status(500).json({error: 'Internal Error Occurred' + error, success: false});
@@ -128,7 +121,6 @@ const like = async (req, res) => {
         
         // increment likes_count by 1
         const likes_count = await incrementLikesCount(post_id);
-
         res.status(200).json({like, likes_count});
     } catch (error) {
         res.status(500).send('Internal Error Occurred:' + error);
@@ -139,7 +131,6 @@ const destroyLike = async(req, res) => {
     try {
         const user_id = req.cookies.user_id;
         const {post_id} = req.body;
-        
         const deletedLike = await deleteLike(post_id, user_id);
         if(!deletedLike){
             return res.status(404).send({message: 'Unable to delete like', success: false});
@@ -147,7 +138,6 @@ const destroyLike = async(req, res) => {
 
         // decrement likes_count by 1
         const likes_count = await decrementLikesCount(post_id);
-
         res.status(200).send({message: 'Like deleted successfully', likes_count, success: true});
     } catch (error) {
         res.status(500).send({message: 'Internal Error Occurred' + error, success: false});
@@ -161,7 +151,6 @@ const userPosts = async (req, res) => {
         if(!id){
             return res.status(400).send('id not available');
         }
-        
         const posts = await getPostsByUserId(id, user_id, page);
         res.status(200).json(posts);
     } catch (error) {
@@ -188,9 +177,7 @@ const forYouFeed = async (req, res) => {
     const { page } = req.query;
     try {
         const ids = await getFollowingIds(user_id);
-        
         const postsFromOther = await getPostsFromOthers(ids, user_id, page);
-      
         const postsFromFollowing = await getPostsByFollowingIds(ids, user_id, page);
 
         const posts = postsFromOther.reduce((acc, item, index) => {

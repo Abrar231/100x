@@ -1,6 +1,3 @@
-const { readFile } = require('fs/promises');
-const path = require('path');
-
 const replacer = (key, value) => {
     const seen = new WeakSet();
 
@@ -36,48 +33,10 @@ const replacer = (key, value) => {
     return traverseObject(value);
 }
 
-const avatarUrlToData = async (User) => {
-    const {avatar, image} = User;
-    const avatarData = avatar && await readFile(avatar);
-    const imageData = image && await readFile(image);
-
-    if(!!avatar && !!image){
-        return {...User, 
-            avatar: avatar? {
-                data: avatarData.toString('base64'),
-                ext: path.extname(avatar).substring(1)
-            }: null,
-            image: image? {
-                data: imageData.toString('base64'),
-                ext: path.extname(image).substring(1)
-            }: null,
-        }
-    }
-
-    if(image){
-        return {...User,
-            image: image? {
-                data: imageData.toString('base64'),
-                ext: path.extname(image).substring(1)
-            }: null,
-        }
-    }
-
-    if(avatar){
-        return {...User, 
-            avatar: avatar? {
-                data: avatarData.toString('base64'),
-                ext: path.extname(avatar).substring(1)
-            }: null,
-        }
-    }
-
-    return User;
-}
 
 const removeCircularReference = (article) => {
     const stringified = JSON.stringify(article, replacer);
     return JSON.parse(stringified);
 }
 
-module.exports = { avatarUrlToData, removeCircularReference }
+module.exports = { removeCircularReference }

@@ -17,7 +17,6 @@ const PrivateRoute = ({component}) => {
         getAuth();
 
     }, []);
-    // console.log("isAuthenticated: " + isAuthenticated);
 
     return (
         isLoading? 

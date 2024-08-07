@@ -29,7 +29,7 @@ function Avatar() {
         <div className="flex fixed bottom-5 justify-between items-center w-[248px]">
             <div className="flex items-start justify-between w-full">
                 <div className="flex gap-3">
-                    {avatar && <img className="w-10 h-10 rounded-[200px] self-center" src={`${apiUrl}/images/${avatar}`} />}
+                    {avatar && <img className="w-10 h-10 rounded-[200px] self-center" src={avatar} />}
                     {!avatar && <div className='w-10 h-10 rounded-full self-center bg-neutral-800' />}
                     <div>
                         <div className="text-neutral-50 font-inter font-bold">

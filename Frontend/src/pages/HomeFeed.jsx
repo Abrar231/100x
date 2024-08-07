@@ -19,7 +19,6 @@ function HomeFeed() {
                 <RightSidebar />
             </main>
             <BottomNav />
-            {/* <PopupMessage text="Hello How are you? Keep Posting to incease your visibility. Let's go!!" /> */}
             <RoundButton />
         </div>
     )

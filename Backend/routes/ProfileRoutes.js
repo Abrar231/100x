@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateUser, upload } = require('../middlewares/index.js');
+const { authenticateUser, upload, uploadToS3 } = require('../middlewares/index.js');
 const {signup, updateProfile, getProfileByUsername, getProfileById, followUser, unfollowUser, searchUsers} = require('../controllers/ProfileController.js')
 
 router.post('/signup', signup);
@@ -8,7 +8,7 @@ router.post('/signup', signup);
 router.post('/updateProfile', authenticateUser, upload.fields([
     {name: 'avatar', maxCount: 1},
     {name: 'bgImage', maxCount: 1},
-]) , updateProfile);
+]) , uploadToS3, updateProfile);
 
 router.get('/username/:username', authenticateUser, getProfileByUsername);
 

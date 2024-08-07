@@ -1,15 +1,8 @@
 const db = require('../models/index.js');
-const { avatarUrlToData } = require('../utility.js');
 const bcrypt = require('bcryptjs');
 
-const getHash = async (password) => {
-    const salt = await bcrypt.genSalt(10);
-    return await bcrypt.hash(password, salt);
-}
-
 const getUserByEmail = async (email) => {
-    const User = await db.User.findOne({where: {email}});
-    return User;
+    return await db.User.findOne({where: {email}});
 }
 
 const userLogin = async (email, password) => {
@@ -23,7 +16,6 @@ const userLogin = async (email, password) => {
     }
     const {id, display_name, username, avatar} = user;
     return {id, display_name, username, avatar};
-    // return await avatarUrlToData({id, display_name, username, avatar});
 }
 
-module.exports = { getHash, getUserByEmail, userLogin }
+module.exports = { getUserByEmail, userLogin }

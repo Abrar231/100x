@@ -15,8 +15,6 @@ function UserProfile() {
     useEffect(() => {
         (async () => {
             const user = await getProfile(username);
-            // console.log("Profile: " + JSON.stringify(user));
-            // setUser(U => { return {...U, ...user}});
             setUser({...user});
         })();
     }, [username]);

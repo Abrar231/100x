@@ -19,21 +19,7 @@ const Login1 =() => {
     const {setIsLoggedIn} = useContext(AuthContext);
     const navigate = useNavigate();
     const dialogRef = useRef(null);
-
-    // const handleLogin = async () => {
-    //     try {
-    //         const response = await userLogin(User.email, User.password);
-    //         if(response){
-    //             console.log("Successful Login Response: " + JSON.stringify(response));
-    //             setLoggedInUser({...response.User});
-    //             setIsLoggedIn(true);
-    //             navigate('/home');
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-
-    // }
+    
     useEffect(() => {
         if(dialogRef){
             dialogRef.current.showModal();
@@ -41,80 +27,74 @@ const Login1 =() => {
     }, [])
 
     return (
-        // <div className='flex justify-center items-center h-screen bg-black'>
-            <dialog ref={dialogRef} className=' bg-black rounded-2xl backdrop:bg-blue-wash'>
-                <Formik
-                    initialValues={{
-                        email: '',
-                        password: '',
-                        // name: '',
-                        // // 'date of birth': '',
-                        // day: '',
-                        // month: '',
-                        // year: '',
-                    }}
-                    // {name: "", email: "", "date of birth": "", day: "", month: "", year: "", password: ""}
-                    validationSchema={Yup.object({
-                        email: Yup.string()
-                            .max(50, 'Must be 50 characters or less')
-                            .required('Required'),
-                        password: Yup.string()
-                            .matches(
-                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
-                                'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number'
-                            )
-                            .required('Required'),
-                    })}
-                    onSubmit={async (values, { setSubmitting, setValues, setErrors, setTouched }) => {
-                        try {
-                            const response = await userLogin(values.email, values.password);
-                            if(response.message){
-                                // console.log("Successful Login Response: " + JSON.stringify(response));
-                                setLoggedInUser({...response.User});
-                                setIsLoggedIn(true);
-                                navigate('/home');
-                            } 
-                            if(response.error){
-                                setPopup({show: true, text: 'Incorrect. Please try again.'});
-                                setTimeout(() => {
-                                    setPopup({show: false, text:''});
-                                }, 3000);
-                                setValues({ email: '', password: '' });
-                                setErrors({});
-                                setTouched({});
-                            }
-                            setSubmitting(false);
-                        } catch (error) {
-                            console.log(error);
+        <dialog ref={dialogRef} className=' bg-black rounded-2xl backdrop:bg-blue-wash'>
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: '',
+                }}
+                validationSchema={Yup.object({
+                    email: Yup.string()
+                        .max(50, 'Must be 50 characters or less')
+                        .required('Required'),
+                    password: Yup.string()
+                        .matches(
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+                            'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number'
+                        )
+                        .required('Required'),
+                })}
+                onSubmit={async (values, { setSubmitting, setValues, setErrors, setTouched }) => {
+                    try {
+                        const response = await userLogin(values.email, values.password);
+                        if(response.message){
+                            setLoggedInUser({...response.User});
+                            setIsLoggedIn(true);
+                            navigate('/home');
+                        } 
+                        if(response.error){
+                            setPopup({show: true, text: 'Incorrect. Please try again.'});
+                            setTimeout(() => {
+                                setPopup({show: false, text:''});
+                            }, 3000);
+                            setValues({ email: '', password: '' });
+                            setErrors({});
+                            setTouched({});
                         }
-                    }}
-                >
-                    {({isValid}) => {
-                        return <Form>
-                            <div className="flex flex-col justify-center items-center w-full md:w-390 h-screen md:h-[620px] ">
-                                <div className="flex p-10 justify-center grow self-stretch shrink-0">
-                                    <div className='flex items-end'>
-                                        <img className="w-10 h-[18px]" src={login100} />
-                                        <img className="h-[13px] w-3 " src={loginX} />
-                                    </div>
-                                </div>
-                                <div className='flex flex-col md:h-full h-[620px] max-w-sm'>
-                                    <div className='flex justify-evenly flex-col px-10 grow'>
-                                        <h1 className=' text-white text-3xl'>Sign in to 100X</h1>
-                                        <Field component={Input} label='Email' type='text' name='email' />
-                                        <Field component={Input} label='Password' type='password' name='password' />
-                                        <Button size='lg' variant='blue' textColor='white' type='submit' disabled={!isValid} >
-                                            Log in
-                                        </Button>
-                                    </div>
+                        setSubmitting(false);
+                    } catch (error) {
+                        setPopup({show: true, text: error});
+                        setTimeout(() => {
+                            setPopup({show: false, text:''});
+                        }, 3000);
+                    }
+                }}
+            >
+                {({isValid}) => {
+                    return <Form>
+                        <div className="flex flex-col justify-center items-center w-full md:w-390 h-screen md:h-[620px] ">
+                            <div className="flex p-10 justify-center grow self-stretch shrink-0">
+                                <div className='flex items-end'>
+                                    <img className="w-10 h-[18px]" src={login100} />
+                                    <img className="h-[13px] w-3 " src={loginX} />
                                 </div>
                             </div>
-                            {popup.show && <PopupMessage text={popup.text} />}
-                        </Form>
-                    }}
-                </Formik>
-            </dialog>
-        // </div>
+                            <div className='flex flex-col md:h-full h-[620px] max-w-sm'>
+                                <div className='flex justify-evenly flex-col px-10 grow'>
+                                    <h1 className=' text-white text-3xl'>Sign in to 100X</h1>
+                                    <Field component={Input} label='Email' type='text' name='email' />
+                                    <Field component={Input} label='Password' type='password' name='password' />
+                                    <Button size='lg' variant='blue' textColor='white' type='submit' disabled={!isValid} >
+                                        Log in
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                        {popup.show && <PopupMessage text={popup.text} />}
+                    </Form>
+                }}
+            </Formik>
+        </dialog>
       )
 }
 

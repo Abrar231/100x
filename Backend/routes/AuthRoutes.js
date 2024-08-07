@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();  
 const { authenticateUser } = require('../middlewares/index.js');
-const {changePassword, isEmailAvailable, login, auth, logout} = require('../controllers/AuthController.js');
-
-router.post('/changePassword', changePassword);
+const { isEmailAvailable, login, auth, logout} = require('../controllers/AuthController.js');
 
 router.get('/emailAvailable', isEmailAvailable);
 

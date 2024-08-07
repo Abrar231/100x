@@ -1,6 +1,5 @@
 import x from '../../assets/images/x.svg'
 import addPhoto from '../../assets/images/material-symbols-add-a-photo-outline.svg'
-// import image18 from '../../assets/images/profile-edit-1-image-18.png'
 import Input from '../../components/Input'
 import { forwardRef, useContext, useRef, useState, } from 'react'
 import leftArrow from '../../assets/images/arrow-left.svg'
@@ -16,38 +15,16 @@ import { apiUrl } from '../../../config'
 // eslint-disable-next-line react/display-name
 const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => {
     const { loggedInUser, setLoggedInUser } = useContext(UserContext);
-    // created profile state to prevent re-renders of UserProvider due to changes in Input elements
-    // const [profile, setProfile] = useState({bio: User.bio, location: User.location, name: User.display_name, website: User.link});
     const avatarRef = useRef(null);
     const bgImageRef = useRef(null);
-    // const {avatar, image} = User;
-    const [avatar, setAvatar] = useState(User.avatar? `${apiUrl}/images/${User.avatar}`: null);
-    const [bgImage, setBgImage] = useState(User.image? `${apiUrl}/images/${User.image}`: null);
+    const [avatar, setAvatar] = useState(User.avatar? User.avatar: null);
+    const [bgImage, setBgImage] = useState(User.image? User.image: null);
     const [isAvatarChanged, setIsAvatarChanged] = useState(false);
     const [isBgImageChanged, setIsBgImageChanged] = useState(false);
-    // const [avatarData, setAvatarData] = useState(null);
-    // const [bgImageData, setBgImageData] = useState(null);
-    // const [bgImage, setBgImage] = useState(null);
-
-    // const handleAvatarInput = (event) => {
-    //     const file = event.target.files[0];
-    //     setAvatarData(file);
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             setAvatar(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //       } else {
-    //         setAvatar(null);
-    //     }
-    //     console.log('File uploaded:', event.target.files[0]);
-    // };
 
     const handleAvatarInput = (event, setFieldValue) => {
         const file = event.target.files[0];
         setIsAvatarChanged(true);
-        // setAvatarData(file);
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -59,38 +36,15 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
             setAvatar(null);
             setFieldValue('avatar', null);
         }
-        // console.log('File uploaded:', event.target.files[0]);
     };
-
-    // const handleAvatarUpload = () => {
-    //     // Your file upload logic goes here
-    //     // You can use an API or handle the upload on the server-side
-    //     console.log('File uploaded:', avatar);
-    // };
 
     const handleAvatarClick = (e) => {
         e.preventDefault();
         avatarRef.current.click();
     };
 
-    // const handleBgImageInput = (event) => {
-    //     const file = event.target.files[0];
-    //     setBgImageData(file);
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             setBgImage(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //       } else {
-    //         setBgImage(null);
-    //     }
-    //     console.log('Background Image File uploaded:', event.target.files[0]);
-    // };
-
     const handleBgImageInput = (event, setFieldValue) => {
         const file = event.target.files[0];
-        // setBgImageData(file);
         setIsBgImageChanged(true);
         if (file) {
             const reader = new FileReader();
@@ -103,7 +57,6 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
             setBgImage(null);
             setFieldValue('bgImage', null);
         }
-        // console.log('Background Image File uploaded:', event.target.files[0]);
     };
 
     const handleBgImageClear = (e, setFieldValue) => {
@@ -113,59 +66,10 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
         setFieldValue('bgImage', null);
     }
 
-    // const handleBgImageUpload = () => {
-    //     // Your file upload logic goes here
-    //     // You can use an API or handle the upload on the server-side
-    //     console.log('Background Image File uploaded:', bgImage);
-    // };
-
     const handleBgImageClick = (e) => {
         e.preventDefault();
         bgImageRef.current.click();
     };
-
-    // const handleClick = async (e) => {
-    //     e.preventDefault();
-    //     console.log('Form submited');
-    //     let formData = new FormData();
-    //     formData.append('avatar', avatarData);
-    //     formData.append('bgImage', bgImageData);
-    //     formData.append('profile', profile);
-    //     console.log(formData);
-
-    //     // Commenting folowing to get formData.
-
-    //     // API call to update Profile
-    //     const updatedUser = await updateUser(formData);
-
-    //     // Update loggedInUser and User
-    //     if(updatedUser.success){
-    //         const {avatar, display_name} = updatedUser.User;
-    //         setLoggedInUser({...loggedInUser, display_name, avatar });
-    //         setUser({...User, ...updatedUser.User});
-            
-    //         // console.log("loggedInUser: " + JSON.stringify({...loggedInUser, display_name: profile.name, avatar }));
-    //         // console.log("User: " + JSON.stringify({...User, ...data, avatar, image}));
-    //     }
-
-    //     // Call closeDialog fn
-    //     closeDialog();
-
-    //     // console.log(loggedInUser);
-    //     // console.log("updatedUser: " + updatedUser);
-    //     // console.log("avatar: " + avatar);
-    // }
-
-    // const avatarUrlToData = (str) => {
-    //     if(!str){
-    //         return null;
-    //     }
-    //     const commaIndex = str.indexOf(',');
-    //     if (commaIndex !== -1) {
-    //       return str.substring(commaIndex + 1);
-    //     }
-    //     return null;
-    // }
 
     return (
         <dialog ref={ref} className="bg-black backdrop:bg-blue-wash w-[512px] rounded-2xl">
@@ -178,7 +82,6 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                     avatar: User.avatar,
                     bgImage: User.image,
                 }}
-                // {name: "", email: "", "date of birth": "", day: "", month: "", year: "", password: ""}
                 validationSchema={Yup.object({
                     display_name: Yup.string()
                         .max(50, 'Must be 50 characters or less')
@@ -193,11 +96,7 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
                         let formData = new FormData();
-                        // formData.append('avatar', avatarData);
-                        // formData.append('bgImage', bgImageData);
-                        // formData.append('profile', values);
                         for (const [key, value] of Object.entries(values)) {
-                            // console.log(`Key: ${key}, isAvatarChanged: ${isAvatarChanged} & isBgImageChanged: ${isBgImageChanged}, value: ${value}}`);
                             if((key === 'avatar' && !isAvatarChanged) || (key === 'bgImage' && !isBgImageChanged) || !value){
                                 continue;
                             }
@@ -223,15 +122,15 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                             setTimeout(() => {
                                 setPopup({show: false, text:''});
                             }, 3000);
-                            
-                            // console.log("loggedInUser: " + JSON.stringify({...loggedInUser, display_name: profile.name, avatar }));
-                            // console.log("User: " + JSON.stringify({...User, ...data, avatar, image}));
                         }
 
                         // Call closeDialog fn
                         setSubmitting(false);
                     } catch (error) {
-                        console.log(error);
+                        setPopup({show: true, text: error});
+                        setTimeout(() => {
+                            setPopup({show: false, text:''});
+                        }, 3000);
                     }
                 }}
             >
@@ -258,7 +157,6 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                                         {!bgImage && <div className='w-full h-64 border border-neutral-500'></div>}
                                     </div>
                                     <div className="flex items-start gap-2 absolute">
-                                        {/* <input ref={bgImageRef} type="file" name="bgImage" className='h-0 w-0 opacity-0 absolute -z-10' onChange={handleBgImageInput} /> */}
                                         <input ref={bgImageRef} type="file" name="bgImage" className='hidden' onChange={(event) => handleBgImageInput(event, setFieldValue)} />
                                         <button  className="flex p-2 justify-center items-center gap-2.5 rounded-[100px] bg-black/60" onClick={handleBgImageClick}>
                                             <img src={addPhoto} />
@@ -270,7 +168,6 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                                 </div>
                                 <div className="relative flex self-stretch justify-between ml-3">
                                     <div className="relative w-1/4 h-auto mb-3 min-w-[50px] -mt-[15%] flex justify-center items-center">
-                                        {/* <input ref={avatarRef} type="file" name="avatar" className='h-0 w-0 opacity-0 absolute -z-10' onChange={handleAvatarInput} /> */}
                                         <input ref={avatarRef} type="file" name="avatar" className='hidden' onChange={(event) => handleAvatarInput(event, setFieldValue)} />
                                         <button className="absolute flex p-2 justify-center items-center rounded-[1000px] bg-black/60"  onClick={handleAvatarClick}>
                                             <img src={addPhoto} />

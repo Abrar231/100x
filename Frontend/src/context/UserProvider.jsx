@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import PropTypes from 'prop-types'
-// import profileAvatar from '../assets/images/profile-user-avatar.png'
-// import profileImage from '../assets/images/profile-image.png'
 import { getProfileById } from "../services/userService";
 
 export function UserProvider({children}) {

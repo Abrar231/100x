@@ -21,9 +21,6 @@ import { Link } from 'react-router-dom'
 import { apiUrl } from '../../config'
 
 const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) => {
-    // const navigate = useNavigate();
-
-    // console.log("Post Item: " + JSON.stringify(post))
     const { loggedInUser } = useContext(UserContext);
     const {repost_id} = post;
     const { id, content, user_id, posted_at, comment_count, repost_count, likes_count, is_liked, is_reposted } = repost_id? post.originalPost: post;
@@ -34,14 +31,11 @@ const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) =
     const [Repost, setRepost] = useState({is_reposted, repost_count});
     const [commentCount, setCommentCount] = useState(commentsCount? commentsCount: comment_count);
     const [showModal, setShowModal] = useState(false);
-    // const [popup, setPopup] = useState({show: false, text: ''});
-    // console.log("Comment Count: " + commentsCount);
 
     const commentRef = useRef(null);
     const openCommentModal = (e) => {
         commentRef.current.showModal();
         e.stopPropagation();
-        console.log('test In openCommentModal');
     }
 
     const handleRepost = async (e) => {
@@ -71,9 +65,7 @@ const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) =
 
     const handleLike = async (e) => {
         e.stopPropagation();
-        // console.log('Clicked on handleLike');
         if(!Likes.is_liked){
-            // console.log('Calling like api');
             const createdLike = await createLike(id);
             if(createdLike.like.id){
                 setLikes({is_liked:true, likes_count: createdLike.likes_count});
@@ -83,8 +75,6 @@ const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) =
                 }, 3000);
             }
         } else {
-            // console.log('Calling deleteLike api');
-            //code to delete like
             const deletedLike = await deleteLike(id);
             if(deletedLike.success){
                 setLikes({is_liked: false, likes_count: deletedLike.likes_count});
@@ -98,10 +88,8 @@ const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) =
 
     const handleDeletePost = async (e) => {
         e.stopPropagation();
-        // console.log('handleDeletePost called');
         const deletedPost = await deletePost(id);
         if(deletedPost.success){
-            // console.log('Showing Popup');
             setPopup({show: true, text: 'Post deleted successfully'});
             setTimeout(() => {
                 setPopup({show: false, text:''});
@@ -115,12 +103,6 @@ const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) =
         e.stopPropagation();
         setShowModal(true);
     }
-
-    // const handleClick = () => {
-    //     navigate(`/post/${post.id}`);
-    // }
-
-    // console.log("Post with id:" + id + "is" + JSON.stringify(post))
 
     return (
         <>
@@ -136,7 +118,7 @@ const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) =
             )}
             <article className="flex w-full py-2 px-4 items-start gap-4 border-b border-neutral-500">
                 <div className='w-12 h-12'>
-                    {avatar && <img className="shrink-0" src={`${apiUrl}/images/${avatar}`} />}
+                    {avatar && <img className="shrink-0" src={avatar} />}
                     {!avatar && <div className='w-full h-full bg-neutral-800 rounded-full'/>}
                 </div>
                 <div className="flex flex-col items-start gap-2 grow shrink-0 basis-0">

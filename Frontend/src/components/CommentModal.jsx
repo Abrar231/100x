@@ -8,24 +8,13 @@ import { Editor, Transforms, createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { apiUrl } from '../../config';
 
-// const initialValue = [
-//     {
-//       type: 'paragraph',
-//       children: [{ text: 'A line of text in a paragraph.' }],
-//     },
-//   ]
-
 // eslint-disable-next-line react/display-name
 const CommentModal = forwardRef(({post, setComments, setCommentCount, setPopup}, ref) => {
     const { id, content, posted_at } = post;
     const { display_name, username, avatar } = post.originalPost? post.originalPost.User: post.User;
     const [comment, setComment] = useState("");
-    // const userImage = userAvatar;
-    // const divRef = useRef(null);
-    // const cursorPositionRef = useRef(null);
     const {loggedInUser} = useContext(UserContext);
     const {avatar: loggedAvatar} = loggedInUser;
-    // console.log(`Post on Comment: ${JSON.stringify(post)}`);
 
     const [editor] = useState(() => withReact(createEditor()));
     const [value, setValue] = useState([
@@ -50,41 +39,10 @@ const CommentModal = forwardRef(({post, setComments, setCommentCount, setPopup},
         });
     }, [editor]);
 
-    // useEffect(() => {
-    //     const restoreCursorPosition = () => {
-    //       const cursorPosition = cursorPositionRef.current;
-    //       if (cursorPosition !== null && cursorPosition !== 0 && div.childNodes.length > 0) {
-    //         const range = document.createRange();
-    //         range.setStart(divRef.current.childNodes[0], cursorPosition);
-    //         range.collapse(true);
-    
-    //         const selection = window.getSelection();
-    //         selection.removeAllRanges();
-    //         selection.addRange(range);
-    //       }
-    //     };
-    //     const div = divRef.current;
-    //     if (div) {
-    //       div.focus();
-    //       restoreCursorPosition();
-    //     }
-    // }, [comment]);
-
-    // const handleInput = (e) => {
-    //     setComment(e.target.innerText);
-    //     const selection = window.getSelection();
-    //     if (selection.rangeCount > 0) {
-    //         cursorPositionRef.current = selection.getRangeAt(0).startOffset;
-    //     } else {
-    //         cursorPositionRef.current = selection.anchorOffset;
-    //     }
-    // }
-
     const handleComment = async () => {
         const createdComment = await createComment(comment, id);
         if(createdComment.comment.id){
             clearEditor();
-            // console.log('Comment posted successfully. Comment_count:' + createdComment.comment_count);
             if(setComments){
                 setComments(comments => {return {...comments, createdComment}});
             }
@@ -105,10 +63,9 @@ const CommentModal = forwardRef(({post, setComments, setCommentCount, setPopup},
                         <img src={closeButton} />
                     </button>
                 </div>
-                {/* Post has to be shown here to which this comment is linked to */}
                 <article className='flex items-start gap-3 w-full grow relative'>
                     <div className='self-stretch'>
-                        {avatar && <img className="shrink-0 rounded-[200px]" src={`${apiUrl}/images/${avatar}`} />}
+                        {avatar && <img className="shrink-0 rounded-[200px]" src={avatar} />}
                         {!avatar && <div className='w-12 h-12 rounded-full border bg-neutral-800'></div>}
                     </div>
                     <div className="absolute left-[5%] top-12 bottom-0 bg-neutral-500/50 line"></div>
@@ -127,14 +84,11 @@ const CommentModal = forwardRef(({post, setComments, setCommentCount, setPopup},
                 </article>
                 <div className="flex items-start gap-3 w-full grow ">
                     <div className='self-stretch'>
-                        {loggedAvatar && <img className="shrink-0 rounded-[200px]" src={`${apiUrl}/images/${loggedAvatar}`} />}
+                        {loggedAvatar && <img className="shrink-0 rounded-[200px]" src={loggedAvatar} />}
                         {!loggedAvatar && <div className='w-12 h-12 rounded-full border bg-neutral-500'></div>}
                     </div>
                     <div className="flex  grow self-stretch" >
                         {comment.length===0 &&  <span className="text-neutral-600 font-inter text-xl absolute pointer-events-none" id="placeholder">Post your comment</span>}
-                        {/* <div ref={divRef} id="tweet-content" autoFocus contentEditable="true" className="text-neutral-50 font-inter text-xl focus:outline-none caret-twitter-blue grow" onInput={handleInput}>
-                            {comment}
-                        </div> */}
                         <Slate editor={editor} initialValue={value} onChange={newValue => setValue(newValue)} >
                             <Editable className='text-neutral-50 font-inter text-xl focus:outline-none caret-twitter-blue grow' />
                         </Slate>

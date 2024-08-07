@@ -11,15 +11,6 @@ import * as Yup from 'yup'
 // eslint-disable-next-line react/display-name
 const Step3 = forwardRef(({  User, setUser }, ref) => {
     const step4Ref = useRef(null);
-    // const handleStep3 = () => {
-    //     console.log(User);
-    //     ref.current.close();
-    //     step4Ref.current.showModal();
-    // }
-
-    
-
-    // const [verificationCode, setVerificationCode] = useState("")
 
     return(
         <dialog ref={ref} className="bg-black w-full md:w-390 h-824 md:h-[440px]  rounded-2xl backdrop:bg-blue-wash">
@@ -77,8 +68,6 @@ const Step3 = forwardRef(({  User, setUser }, ref) => {
 });
 
 Step3.propTypes = {
-    // handleStep3: PropTypes.func,
-    // step4Ref: PropTypes.object.isRequired,
     User: PropTypes.object.isRequired,
     setUser: PropTypes.func.isRequired,
 }

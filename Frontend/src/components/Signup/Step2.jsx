@@ -3,7 +3,6 @@ import Input from '../Input'
 import Button from '../Button'
 import PropTypes from 'prop-types'
 import { forwardRef, useRef } from 'react'
-// import Step3 from './Step3'
 import { createPortal } from 'react-dom'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
@@ -13,12 +12,6 @@ import Step4 from './Step4'
 const Step2 = forwardRef(({  User, setUser, }, ref) => {
     const step3Ref = useRef(null);
 
-    // const handleStep2 = () => {
-    //     console.log(User);
-    //     ref.current.close();
-    //     step3Ref.current.showModal();
-    // }
-
     
     return (
         <dialog ref={ref} className="bg-black w-full md:w-390 h-824 md:h-[508px]  rounded-2xl backdrop:bg-blue-wash">
@@ -27,10 +20,6 @@ const Step2 = forwardRef(({  User, setUser, }, ref) => {
                     name: User.name,
                     email: User.email,
                     'date of birth': User['date of birth'],
-                    // day: '',
-                    // month: '',
-                    // year: '',
-                    // password: '',
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string()
@@ -80,12 +69,8 @@ const Step2 = forwardRef(({  User, setUser, }, ref) => {
 });
 
 Step2.propTypes = {
-    // handleStep2: PropTypes.func,
-    // step3Ref: PropTypes.object.isRequired,
     User: PropTypes.object.isRequired,
     setUser: PropTypes.func.isRequired,
-    // isStep2Open: PropTypes.bool.isRequired,
-    // setIsStep2Open: PropTypes.func.isRequired,
 }
 
 export default Step2

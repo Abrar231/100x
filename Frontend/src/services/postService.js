@@ -1,62 +1,38 @@
 import { apiUrl } from "../../config";
-import { avatarDataToUrl } from "./util";
+// import { avatarDataToUrl } from "./util";
 
-const convertAvatarToUrl = (posts) => {
-  return posts.map(post => {
-    const {repost_id} = post;
-    const User = repost_id? post.originalPost.User: post.User
-    // const User = avatarDataToUrl(rawUser);
+// const convertAvatarToUrl = (posts) => {
+//   return posts.map(post => {
+//     const {repost_id} = post;
+//     const User = repost_id? post.originalPost.User: post.User
+//     // const User = avatarDataToUrl(rawUser);
 
-    if(repost_id){
-      return {...post, originalPost: {...post.originalPost, User}};
-    }
-    return {...post, User};
-    // const {avatar} = repost_id? post.originalPost.User: post.User;
-    // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
-    // if(repost_id){
-    //   return {...post, originalPost: {...post.originalPost, User: {...post.originalPost.User, avatar: avatarUrl}}}
-    // }
-    // // console.log(JSON.stringify({...post, User:{...post.User, avatar: avatarUrl} }));
-    // return {...post, User:{...post.User, avatar: avatarUrl}}
-  });
-}
+//     if(repost_id){
+//       return {...post, originalPost: {...post.originalPost, User}};
+//     }
+//     return {...post, User};
+//     // const {avatar} = repost_id? post.originalPost.User: post.User;
+//     // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
+//     // if(repost_id){
+//     //   return {...post, originalPost: {...post.originalPost, User: {...post.originalPost.User, avatar: avatarUrl}}}
+//     // }
+//     // // console.log(JSON.stringify({...post, User:{...post.User, avatar: avatarUrl} }));
+//     // return {...post, User:{...post.User, avatar: avatarUrl}}
+//   });
+// }
 
 export const getForYouFeed = async (page) => {
-    // console.log('Request sent to For You Feed API');
     const posts = await fetch(`${apiUrl}/api/post/forYouFeed?page=${page}`, {
       credentials: 'include'
     });
-    const {posts: jsonPosts, feedType} = await posts.json();
-    const userPosts = convertAvatarToUrl(jsonPosts);
-    // jsonPosts.map(post => {
-    //   const {repost_id} = post;
-    //   const {avatar} = repost_id? post.originalPost.User: post.User;
-    //   const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
-    //   if(repost_id){
-    //     return {...post, originalPost: {...post.originalPost, User: {...post.originalPost.User, avatar: avatarUrl}}}
-    //   }
-    //   return {...post, User:{...post.User, avatar: avatarUrl} }
-    // });
-    return {posts: userPosts, feedType};
+    return await posts.json();
 }
 
 export const getFollowingFeed = async (page) => {
-    // console.log('Request sent to Following Feed API');
     const posts = await fetch(`${apiUrl}/api/post/followingFeed?page=${page}`, {
       credentials: 'include'
     });
-    const {posts: jsonPosts, feedType} = await posts.json();
-    const userPosts = convertAvatarToUrl(jsonPosts);
-    // jsonPosts.map(post => {
-    //   const {repost_id} = post;
-    //   const {avatar} = repost_id? post.originalPost.User: post.User;
-    //   const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
-    //   if(repost_id){
-    //     return {...post, originalPost: {...post.originalPost, User: {...post.originalPost.User, avatar: avatarUrl}}}
-    //   }
-    //   return {...post, User:{...post.User, avatar: avatarUrl} }
-    // });
-    return {posts: userPosts, feedType};
+    return await posts.json();
 }
 
 export const getTimeDifference = (date1, date2) => {
@@ -64,12 +40,6 @@ export const getTimeDifference = (date1, date2) => {
   
     // Helper function to format the result
     const formatResult = (value, unit) => `${value}${unit}`;
-  
-    // Convert milliseconds to weeks
-    // const weeks = diffInMilliseconds / (1000 * 60 * 60 * 24 * 7);
-    // if (weeks >= 1) {
-    //   return formatResult(Math.floor(weeks), 'w');
-    // }
   
     // Convert milliseconds to days
     const days = diffInMilliseconds / (1000 * 60 * 60 * 24);
@@ -112,16 +82,7 @@ export const createPost = async (content, id) => {
     if(!post.ok){
         throw new Error('Error while creating Post');
     }
-    const rawCreatedPost = await post.json();
-    const createdPost = convertAvatarToUrl([rawCreatedPost]);
-    return createdPost[0];
-    // const {repost_id} = createdPost;
-    // const {avatar} = repost_id? createdPost.originalPost.User: createdPost.User;
-    // const avatarUrl = avatar? `data:image/${avatar.ext};base64,${avatar.data}`: null;
-    // if(repost_id){
-    //   return {...createdPost, originalPost:{...createdPost.originalPost, User:{...createdPost.originalPost.User, avatar: avatarUrl}}}
-    // }
-    // return {...createdPost, User:{...createdPost.User, avatar: avatarUrl}};
+    return await post.json();
   } catch (error) {
       console.log(error);
   }
@@ -229,11 +190,11 @@ export const deleteLike = async (post_id) => {
 
 export const getUserPosts = async (user_id, page) => {
   const posts = await fetch(`${apiUrl}/api/post/userPosts?id=${user_id}&page=${page}`, {credentials: 'include'});
-  const jsonPosts = await posts.json();
+  return await posts.json();
   // console.log("jsonPosts: " + JSON.stringify(jsonPosts));
-  const userPosts = convertAvatarToUrl(jsonPosts);
+  // const userPosts = convertAvatarToUrl(jsonPosts);
   // console.log("userPosts: " + JSON.stringify(userPosts));
-  return userPosts;
+  // return userPosts;
 }
 
 export const getPostById = async (id) => {
@@ -254,7 +215,7 @@ export const getPostById = async (id) => {
 
 export const getCommentsForPost = async (post_id) => {
   const jsonComments = await fetch(`${apiUrl}/api/post/getComments?post_id=${post_id}`, {credentials: 'include'});
-  const comments = await jsonComments.json();
-  return convertAvatarToUrl(comments);
+  return await jsonComments.json();
+  // return convertAvatarToUrl(comments);
   // return []
 }

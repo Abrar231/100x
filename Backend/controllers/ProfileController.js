@@ -1,3 +1,4 @@
+const { cleanupUnusedUserFiles } = require('../middlewares/index.js');
 const {createUser, findAndUpdateUserProfile, populateUserData, findUserByUsername, getIsFollowed, findUserById, followUserProfile, incrementFollowerCount, incrementFollowingCount, unfollowUserProfile, decrementFollowerCount, decrementFollowingCount, getSearchedUser} = require('../services/ProfileService.js');
 
 const signup = async (req, res) => {
@@ -18,7 +19,8 @@ const updateProfile = async (req, res) => {
     try {
         const {user_id} = req.cookies;
         const data = populateUserData(req);
-        const User = await findAndUpdateUserProfile(user_id, data);        
+        const User = await findAndUpdateUserProfile(user_id, data);
+        await cleanupUnusedUserFiles(req.cookies.user_id, req.fileUrls.avatar, req.fileUrls.bgImage);      
         
         res.status(200).json({
             message: 'Profile updated successfully',

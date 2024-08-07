@@ -9,7 +9,6 @@ import LoadingIcon from './LoadingIcon';
 
 const PostList = ({activeTab, posts, setPosts, User, setPopup}) => {
     const navigate = useNavigate();
-    // console.log('Rendering PostList');
     const feedType = useRef('');
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(0);
@@ -41,31 +40,25 @@ const PostList = ({activeTab, posts, setPosts, User, setPopup}) => {
         if(activeTab){
             if(activeTab === "ForYou"){
                 (async () => {
-                    // console.log('Executing getForYouFeed');
                     setPosts(() => []);
                     const feed = await getForYouFeed(0);
                     setPosts(posts => [...posts, ...feed.posts]);
                     feed.posts.length > 0 ? setHasMore(true): setHasMore(false);
                     setPage(1);
                     feedType.current = feed.feedType;
-                    // console.log(posts);
                 })();
             } else if(activeTab === "Following"){
                 (async () => {
-                    // console.log('Executing getFollowingFeed');
                     setPosts(() => []);
                     const feed = await getFollowingFeed(0);
                     setPosts(posts => [...posts, ...feed.posts]);
                     feed.posts.length > 0 ? setHasMore(true): setHasMore(false);
                     setPage(1);
                     feedType.current = feed.feedType;
-                    // console.log("Posts: " + JSON.stringify(posts));
-                    // console.log("Feed.posts: " + JSON.stringify(feed.posts));
                 })();
             }
         } else {
             (async () => {
-                // console.log('Executing getForYouFeed');
                 if(User.id){
                     setPosts(() => []);
                     const userPosts = await getUserPosts(User.id, 0);
@@ -73,19 +66,11 @@ const PostList = ({activeTab, posts, setPosts, User, setPopup}) => {
                     setPage(1);
                     userPosts.length > 0 ? setHasMore(true): setHasMore(false);
                 }
-                // console.log(userPosts);
             })();
         }
     }, [activeTab, User, setPosts]);
 
-    // console.log("Posts inside PostList: " + JSON.stringify(posts));
-
-    // const handleClick = () => {
-    //     ;
-    // }
-
     const handleClick = (e, id) => {
-        console.log('test In hnadleClick');
         navigate(`/post/${id}`);
     }
 

@@ -14,9 +14,7 @@ const CreatePost = forwardRef(( {posts, setPosts, setPopup} , ref ) => {
     const {loggedInUser} = useContext(UserContext);
     const { avatar } = loggedInUser;
     const [postContent, setPostContent] = useState("");
-    // const cursorPositionRef = useRef(null);
     const location = useLocation();
-    // const divRef = useRef(null);
 
     const [editor] = useState(() => withReact(createEditor()));
     const [value, setValue] = useState([
@@ -41,37 +39,6 @@ const CreatePost = forwardRef(( {posts, setPosts, setPopup} , ref ) => {
         });
     }, [editor]);
 
-    // useEffect(() => {
-    //     // console.log("Cursor Position: " + cursorPositionRef.current);
-    //     const restoreCursorPosition = () => {
-    //       const cursorPosition = cursorPositionRef.current;
-    //       if (cursorPosition !== null && cursorPosition !== 0 && div.childNodes.length > 0) {
-    //         const range = document.createRange();
-    //         range.setStart(divRef.current.childNodes[0], cursorPosition);
-    //         range.collapse(true);
-    
-    //         const selection = window.getSelection();
-    //         selection.removeAllRanges();
-    //         selection.addRange(range);
-    //       }
-    //     };
-    //     const div = divRef.current;
-    //     if (div) {
-    //       div.focus();
-    //       restoreCursorPosition();
-    //     }
-    // }, [postContent]);
-
-    // const handleInput = (e) => {
-    //     setPostContent(e.target.innerText);
-    //     const selection = window.getSelection();
-    //     if (selection.rangeCount > 0) {
-    //         cursorPositionRef.current = selection.getRangeAt(0).startOffset;
-    //     } else {
-    //         cursorPositionRef.current = selection.anchorOffset;
-    //     }
-    // }
-
     const handlePost = async () => {
         const repost_id = null;
         const createdPost = await createPost(postContent, repost_id);
@@ -87,7 +54,6 @@ const CreatePost = forwardRef(( {posts, setPosts, setPopup} , ref ) => {
                 setPopup({show: false, text:''})
             }, 3000);
         }
-        // console.log('Posts logging inside handlePost: ' + JSON.stringify(posts));
     }
 
     return (
@@ -99,14 +65,11 @@ const CreatePost = forwardRef(( {posts, setPosts, setPopup} , ref ) => {
                     </button>
                 </div>
                 <div className="flex items-start gap-3 w-full grow ">
-                    {avatar && <img className="shrink-0 rounded-[200px]" src={`${apiUrl}/images/${avatar}`} alt="user avatar" />}
+                    {avatar && <img className="shrink-0 rounded-[200px]" src={avatar} alt="user avatar" />}
                     {!avatar && <div className="w-10 h-10 shrink-0 rounded-[200px] bg-neutral-800" />}
                     <div className="flex  grow self-stretch">
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
                         {postContent.length===0 &&  <span className="mt-2 text-neutral-600 font-inter text-xl absolute pointer-events-none" id="placeholder">What's happening?!</span>}
-                        {/* <div ref={divRef} id="tweet-content" autoFocus contentEditable="true" className="text-neutral-50 font-inter text-xl focus:outline-none caret-twitter-blue grow" onInput={handleInput}>
-                            {postContent}
-                        </div> */}
                         <Slate editor={editor} initialValue={value} onChange={newValue => setValue(newValue)} >
                             <Editable className='text-neutral-50 font-inter text-xl focus:outline-none caret-twitter-blue grow mt-2' />
                         </Slate>

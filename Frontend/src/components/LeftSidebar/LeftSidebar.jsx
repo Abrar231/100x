@@ -37,7 +37,6 @@ const LeftSidebar = ({ posts, setPosts }) => {
 }
 
 LeftSidebar.propTypes = {
-    // createPostRef: PropTypes.object,
     posts: PropTypes.array.isRequired,
     setPosts: PropTypes.func.isRequired,
 }

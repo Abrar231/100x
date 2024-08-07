@@ -12,32 +12,11 @@ import * as Yup from 'yup'
 const Step4 = forwardRef(({  User, setUser }, ref) => {
     const navigate = useNavigate();
 
-    // const handleStep4 = async () => {
-    //     try {            
-    //         const user = await createUser(User);
-    //         if(user){
-    //             ref.current.close();
-    //             navigate('/login');
-    //         }
-    //         // console.log(User);
-    //         // const months = [null, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
-    //         // console.log(months.indexOf("December"));
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
     return(
         <dialog ref={ref} className="bg-black w-full md:w-390 h-824 md:h-[440px]  rounded-2xl backdrop:bg-blue-wash">
             {
                 ref.current && ref.current.open && <Formik
                     initialValues={{
-                        // name: User.name,
-                        // email: User.email,
-                        // 'date of birth': User['date of birth'],
-                        // // day: '',
-                        // // month: '',
-                        // // year: '',
                         password: '',
                     }}
                     validationSchema={Yup.object({
@@ -99,7 +78,6 @@ const Step4 = forwardRef(({  User, setUser }, ref) => {
 });
 
 Step4.propTypes = {
-    // handleStep4: PropTypes.func,
     User: PropTypes.object.isRequired,
     setUser: PropTypes.func.isRequired,
 }

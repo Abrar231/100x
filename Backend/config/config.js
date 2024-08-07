@@ -1,5 +1,3 @@
-// require('dotenv').config();
-// console.log(JSON.stringify(process.env));
 module.exports = {
     env: process.env.NODE_ENV,
     serverPort: process.env.PORT,
@@ -9,4 +7,9 @@ module.exports = {
     host: process.env.HOST,
     dialect: process.env.DIALECT,
     corsOrigin: process.env.CORS_ORIGIN,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    sessionToken: process.env.AWS_SESSION_TOKEN,
+    region: process.env.AWS_REGION,
+    s3BucketName: process.env.S3_BUCKET_NAME
 }
