@@ -97,7 +97,9 @@ const EditProfile = forwardRef(({closeDialog, User, setUser, setPopup}, ref) => 
                     try {
                         let formData = new FormData();
                         for (const [key, value] of Object.entries(values)) {
-                            if((key === 'avatar' && !isAvatarChanged) || (key === 'bgImage' && !isBgImageChanged) || !value){
+                            console.log(`Key: ${key}, Value: ${value}`);
+                            console.log(`HI`);
+                            if((key === 'avatar' && !isAvatarChanged) || (key === 'bgImage' && !isBgImageChanged)){
                                 continue;
                             }
                             formData.append(key, value);
