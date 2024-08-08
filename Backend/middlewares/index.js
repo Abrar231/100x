@@ -2,9 +2,9 @@ const db = require('../models/index.js');
 const path = require('path');
 const multer  = require('multer');
 const AWS = require('aws-sdk');
-const {accessKeyId, secretAccessKey, sessionToken, region, s3BucketName} = require('../config/config.js');
+const {accessKeyId, secretAccessKey, region, s3BucketName} = require('../config/config.js');
 
-AWS.config.update({accessKeyId, secretAccessKey, sessionToken, region});
+AWS.config.update({accessKeyId, secretAccessKey, region});
 
 const s3 = new AWS.S3();
 
