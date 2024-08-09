@@ -65,7 +65,7 @@ const CreatePost = forwardRef(( {posts, setPosts, setPopup} , ref ) => {
                     </button>
                 </div>
                 <div className="flex items-start gap-3 w-full grow ">
-                    {avatar && <img className="shrink-0 rounded-[200px]" src={avatar} alt="user avatar" />}
+                    {avatar && <img className="shrink-0 w-10 h-10 rounded-[200px]" src={avatar} alt="user avatar" />}
                     {!avatar && <div className="w-10 h-10 shrink-0 rounded-[200px] bg-neutral-800" />}
                     <div className="flex  grow self-stretch">
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
