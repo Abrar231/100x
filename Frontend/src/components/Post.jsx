@@ -118,7 +118,7 @@ const Post = ({ post, posts, setPosts, setComments, commentsCount, setPopup }) =
             )}
             <article className="flex w-full py-2 px-4 items-start gap-4 border-b border-neutral-500">
                 <div className='w-12 h-12'>
-                    {avatar && <img className="shrink-0" src={avatar} />}
+                    {avatar && <img className="shrink-0 rounded-full" src={avatar} />}
                     {!avatar && <div className='w-full h-full bg-neutral-800 rounded-full'/>}
                 </div>
                 <div className="flex flex-col items-start gap-2 grow shrink-0 basis-0">
